@@ -1,0 +1,52 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="centered-heading">Lista obszarów</h1>
+            <% if (isAdmin) { %>
+                <a href="/add-area" class="btn btn-success">Dodaj nowy obszar</a>
+            <% } %>
+        </div>
+        
+        <% if (areas.length > 0) { %>
+            <table class="table table-striped table-hover">
+                <thead class="table-success">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Opis</th>
+                        <% if (isAdmin) { %>
+                            <th scope="col">Akcje</th>
+                        <% } %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let area of areas) { %>
+                        <tr>
+                            <td><%= area.area_id %></td>
+                            <td><%= area.descript %></td>
+                            <% if (isAdmin) { %>
+                                <td>
+                                    <a href="/edit-area/<%= area.area_id %>" class="btn btn-warning btn-sm">Edytuj</a>
+                                    <form action="/delete-area" method="POST" class="d-inline">
+                                        <input type="hidden" name="areaId" value="<%= area.area_id %>">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Czy na pewno chcesz usunąć ten obszar?')">Usuń</button>
+                                    </form>
+                                </td>
+                            <% } %>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <div class="alert alert-info" role="alert">
+                Brak obszarów do wyświetlenia.
+            </div>
+        <% } %>
+    </main>
+
+    <%- include('../includes/end.ejs') %>
+</body>
+</html>

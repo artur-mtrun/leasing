@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= typeof pageTitle !== 'undefined' ? pageTitle : 'Obszar' %></title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-warning text-white">
+                        <h1 class="h3 mb-0">Edytuj obszar</h1>
+                    </div>
+                    <div class="card-body">
+                        <form action="/edit-area" method="POST">
+                            <input type="hidden" name="areaId" value="<%= area.area_id %>">
+                            <div class="mb-3">
+                                <label for="descript" class="form-label">Opis obszaru</label>
+                                <input type="text" class="form-control" id="descript" name="descript" value="<%= area.descript %>" required>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-warning">Zapisz zmiany</button>
+                                <a href="/area-list" class="btn btn-secondary">Anuluj</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('../includes/end.ejs') %>
+</body>
+</html>

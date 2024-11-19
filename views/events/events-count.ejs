@@ -1,0 +1,114 @@
+<%- include('../includes/head.ejs') %>
+<% if (!isAuthenticated) { %>
+    <script>
+        window.location.href = '/login';
+    </script>
+<% } else { %>
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main class="container mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="text-success">Rejestracja Czasu Pracy</h1>
+                <div>
+                    <a href="/worksheets-spa" class="btn btn-primary me-2">Karty Pracy</a>
+                    <a href="/events-spa" class="btn btn-secondary">Powrót do Głównego Widoku</a>
+                </div>
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <label for="month-filter" class="form-label">Miesiąc:</label>
+                    <select id="month-filter" class="form-select">
+                        <option value="01">Styczeń</option>
+                        <option value="02">Luty</option>
+                        <option value="03">Marzec</option>
+                        <option value="04">Kwiecień</option>
+                        <option value="05">Maj</option>
+                        <option value="06">Czerwiec</option>
+                        <option value="07">Lipiec</option>
+                        <option value="08">Sierpień</option>
+                        <option value="09">Wrzesień</option>
+                        <option value="10">Październik</option>
+                        <option value="11">Listopad</option>
+                        <option value="12">Grudzień</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="year-filter" class="form-label">Rok:</label>
+                    <select id="year-filter" class="form-select">
+                        <!-- Opcje będą dodane dynamicznie przez JavaScript -->
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="employee-filter" class="form-label">Pracownik:</label>
+                    <select id="employee-filter" class="form-select">
+                        <!-- Opcje będą dodane dynamicznie -->
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button id="apply-filters" class="btn btn-primary">Zastosuj filtry</button>
+                </div>
+            </div>
+
+            
+            <form id="event-form" class="row g-3 mb-4 bg-light p-3 rounded">
+                <div class="col-md-2">
+                    <label for="event-machinenumber" class="form-label">Czytnik</label>
+                    <input type="number" class="form-control" id="event-machinenumber" name="machinenumber" value="0" readonly>
+                </div>
+                <div class="col-md-2">
+                    <label for="event-enrollnumber" class="form-label">Nr pracownika</label>
+                    <input type="number" class="form-control" id="event-enrollnumber" name="enrollnumber" readonly>
+                </div>
+                <div class="col-md-2">
+                    <label for="event-in-out" class="form-label">We/Wy</label>
+                    <select class="form-select" id="event-in-out" name="in_out" required>
+                        <option value="3">Wy</option>
+                        <option value="2">We</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="event-date" class="form-label">Data</label>
+                    <input type="date" class="form-control" id="event-date" name="event_date" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="event-time" class="form-label">Czas</label>
+                    <input type="time" class="form-control" id="event-time" name="event_time" required>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <button type="submit" class="btn btn-success w-100">Dodaj zdarzenie</button>
+                </div>
+            </form>
+            
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-success">
+                        <tr>
+                            <th>#</th>
+                            <th>Nr czytnika</th>
+                            <th>Nr pracownika</th>
+                            <th>Nazwa</th>
+                            <th>We/Wy</th>
+                            <th>Data</th>
+                            <th>Czas</th>
+                            <th>Akcje</th>
+                        </tr>
+                    </thead>
+                    <tbody id="events-list">
+                        <!-- Events will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <%- include('../includes/end.ejs') %>
+        <div id="adminStatus" data-is-admin="<%= isAdmin %>"></div>
+        <script>
+            var isAdmin = document.getElementById('adminStatus').dataset.isAdmin === 'true';
+        </script>
+        <script src="/js/events-count.js"></script>
+    </body>
+<% } %>
+</html>

@@ -1,0 +1,74 @@
+<%- include('../includes/head.ejs') %>
+<% if (!isAuthenticated) { %>
+    <script>
+        window.location.href = '/login';
+    </script>
+<% } else { %>
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <div class="container mt-4">
+            <h1>Arkusz roboczy</h1>
+            
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <label for="year-filter" class="form-label">Rok:</label>
+                    <select id="year-filter" class="form-select">
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="month-filter" class="form-label">Miesiąc:</label>
+                    <select id="month-filter" class="form-select">
+                        <option value="01">Styczeń</option>
+                        <option value="02">Luty</option>
+                        <option value="03">Marzec</option>
+                        <option value="04">Kwiecień</option>
+                        <option value="05">Maj</option>
+                        <option value="06">Czerwiec</option>
+                        <option value="07">Lipiec</option>
+                        <option value="08">Sierpień</option>
+                        <option value="09">Wrzesień</option>
+                        <option value="10">Październik</option>
+                        <option value="11">Listopad</option>
+                        <option value="12">Grudzień</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="employee-filter" class="form-label">Pracownik:</label>
+                    <select id="employee-filter" class="form-select">
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <strong>Firma pracownika: </strong>
+                    <span id="employee-company-id"></span> - <span id="employee-company-descript"></span>
+                </div>
+            </div>
+
+            <div id="calendar-container">
+                <table id="calendar-table" class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Dzień tygodnia</th>
+                            <th>Numer czytnika</th>
+                            <th>Wejście</th>
+                            <th>Wyjście</th>
+                            <th>Czas pracy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Calendar rows will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <%- include('../includes/end.ejs') %>
+        <script src="/js/worksheet-spa.js"></script>
+    </body>
+<% } %>
+</html>

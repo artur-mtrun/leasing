@@ -1,0 +1,106 @@
+<%- include('../includes/head.ejs') %>
+<% if (!isAuthenticated) { %>
+    <script>
+        window.location.href = '/login';
+    </script>
+<% } else { %>
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <div class="container mt-4">
+            <h1>Raporty</h1>
+            
+            <div class="row mb-4">
+                <div class="col-md-2">
+                    <label for="year-filter" class="form-label">Rok:</label>
+                    <select id="year-filter" class="form-select">
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="month-filter" class="form-label">Miesiąc:</label>
+                    <select id="month-filter" class="form-select">
+                        <option value="01">Styczeń</option>
+                        <option value="02">Luty</option>
+                        <option value="03">Marzec</option>
+                        <option value="04">Kwiecień</option>
+                        <option value="05">Maj</option>
+                        <option value="06">Czerwiec</option>
+                        <option value="07">Lipiec</option>
+                        <option value="08">Sierpień</option>
+                        <option value="09">Wrzesień</option>
+                        <option value="10">Październik</option>
+                        <option value="11">Listopad</option>
+                        <option value="12">Grudzień</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="account-filter" class="form-label">Konto:</label>
+                    <select id="account-filter" class="form-select">
+                        <option value="">Wybierz konto</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="company-filter" class="form-label">Firma:</label>
+                    <select id="company-filter" class="form-select">
+                        <option value="">Wybierz firmę</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="employee-filter" class="form-label">Pracownik:</label>
+                    <select id="employee-filter" class="form-select">
+                        <option value="">Wybierz pracownika</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <button id="generate-report" class="btn btn-primary form-control">Generuj raport</button>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <button id="generate-pdf" class="btn btn-secondary form-control">Generuj PDF</button>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <button id="generate-timesheet-pdf" class="btn btn-info form-control">Generuj kartę pracy</button>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="full-hours-checkbox">
+                        <label class="form-check-label" for="full-hours-checkbox">
+                            Pełne godziny
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="report-container">
+                <table id="report-table" class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Pracownik</th>
+                            <th>Firma</th>
+                            <th>Konto</th>
+                            <th>Wejście</th>
+                            <th>Wyjście</th>
+                            <th>Czas pracy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Wiersze raportu będą wypełnione przez JavaScript -->
+                    </tbody>
+                    <tfoot>
+                        <!-- Miejsce na wiersz podsumowania -->
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <%- include('../includes/end.ejs') %>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+        <script src="/js/worksheet-report.js"></script>
+    </body>
+<% } %>
+</html>

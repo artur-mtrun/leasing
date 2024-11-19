@@ -1,0 +1,60 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/cards.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="centered-heading">Lista kart</h1>
+            <a href="/add-card" class="btn btn-primary">Dodaj kartę</a>
+        </div>
+        
+        <% if (cards.length > 0) { %>
+            <table class="table table-striped table-hover">
+                <thead class="table-success">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nr karty</th>
+                        <th scope="col">Obszar</th>
+                        <th scope="col">Przypisana do</th>
+                        <th scope="col">Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% cards.forEach((card, index) => { %>
+                        <tr>
+                            <th scope="row"><%= index + 1 %></th>
+                            <td><%= card.cardnumber %></td>
+                            <td><%= card.Area ? card.Area.descript : 'Brak' %></td>
+                            <td><%= card.Employee ? card.Employee.nick : 'Nie przypisana' %></td>
+                            <td>
+                                <% if (!card.Employee) { %>
+                                    <form action="/delete-card" method="POST" class="d-inline">
+                                        <input type="hidden" value="<%= card.cardnumber %>" name="cardNumber">
+                                        <button class="btn btn-danger btn-sm" type="submit">Usuń</button>
+                                    </form>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <div class="alert alert-info" role="alert">
+                Brak kart w systemie.
+            </div>
+        <% } %>
+    </main>
+
+<%- include('../includes/end.ejs') %>
+
+<script>
+    document.querySelectorAll('form[action="/delete-card"]').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            if (!confirm('Czy na pewno chcesz usunąć tę kartę?')) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>

@@ -1,0 +1,118 @@
+.centered-form {
+  width: 20rem;
+  max-width: 90%;
+  margin: auto;
+  display: block;
+}
+.centered-heading {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+.event {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+#event-form {
+  margin-top: 20px;
+}
+
+#event-form input,
+#event-form textarea {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+.btn-success, .btn-success:hover, .btn-success:active, .btn-success:focus {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+.table-hover tbody tr:hover {
+  background-color: #e9f9e9;
+}
+.table-light {
+  background-color: #f8f9fa;
+}
+
+.table-secondary {
+  background-color: #e9ecef;
+}
+
+.table-responsive {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.table-success {
+  background-color: #28a745 !important;
+  color: white;
+}
+
+#worksheetTable {
+  width: 100%;
+}
+
+.worksheet-table td input[type="time"] {
+    margin-bottom: 5px;
+}
+
+/* Wiersze events zawsze białe */
+#worksheetTable > tbody > tr.event-row {
+  background-color: white !important;
+}
+
+/* Wiersze worksheet czerwone, jeśli nie ma wpisu w bazie */
+#worksheetTable > tbody > tr.worksheet-row-red {
+  background-color: #f3dbde !important;
+}
+
+/* Wiersze worksheet żółte, jeśli machinenumber = 0 */
+#worksheetTable > tbody > tr.worksheet-row-yellow {
+  background-color: #e9e9c0f6 !important;
+}
+
+/* Wiersze worksheet jasnozielone, jeśli machinenumber > 0 */
+#worksheetTable > tbody > tr.worksheet-row-green {
+  background-color: #d4f5d4 !important;
+}
+
+/* Zapewnienie, że style są stosowane nawet przy hover */
+
+
+#worksheetTable > tbody > tr.event-row > td,
+#worksheetTable > tbody > tr.worksheet-row-red > td,
+#worksheetTable > tbody > tr.worksheet-row-yellow > td,
+#worksheetTable > tbody > tr.worksheet-row-green > td {
+  background-color: inherit !important;
+}
+
+#worksheetTable > tbody > tr.event-row:hover,
+#worksheetTable > tbody > tr.worksheet-row-red:hover,
+#worksheetTable > tbody > tr.worksheet-row-yellow:hover,
+#worksheetTable > tbody > tr.worksheet-row-green:hover {
+  opacity: 0.9 !important;
+}
+#worksheetTable .btn {
+  margin: 2px;
+}
+
+#worksheetTable .btn-primary {
+  background-color: #5c0a0a;
+  border-color: #3b0101;
+}
+
+#worksheetTable .btn-secondary {
+  background-color: #082742;
+  border-color: #191d20;
+}

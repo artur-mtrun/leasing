@@ -1,0 +1,53 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.login-form {
+  width: 20rem;
+  max-width: 90%;
+  margin: auto;
+  display: block;
+}
+
+.card {
+  border: none;
+  border-radius: 1rem;
+}
+
+.card-title {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.custom-label {
+  font-size: 1.4rem;  /* Zwiększony rozmiar czcionki */
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.75rem;  /* Zwiększony odstęp na dole */
+  display: block;
+  text-transform: uppercase;  /* Opcjonalnie, aby etykiety były pisane wielkimi literami */
+  letter-spacing: 0.5px;  /* Opcjonalnie, aby zwiększyć odstęp między literami */
+}
+
+.btn-custom-green {
+  background-color: #66c2a5;
+  border-color: #66c2a5;
+  color: white;
+}
+
+.btn-custom-green:hover {
+  background-color: #4daf84;
+  border-color: #4daf84;
+  color: white;
+}
+
+.form-control {
+  border: 2px solid #ced4da;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+.form-control:focus {
+  border-color: #66c2a5;
+  box-shadow: 0 0 0 0.2rem rgba(102, 194, 165, 0.25);
+}

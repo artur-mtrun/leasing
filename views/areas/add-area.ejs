@@ -1,0 +1,38 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/areas.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h1 class="h3 mb-0">Dodaj nowy obszar</h1>
+                    </div>
+                    <div class="card-body">
+                        <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= errorMessage %>
+                            </div>
+                        <% } %>
+                        <form action="/add-area" method="POST">
+                            <div class="mb-3">
+                                <label for="descript" class="form-label">Opis obszaru</label>
+                                <input type="text" class="form-control" id="descript" name="descript" required>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Dodaj obszar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('../includes/end.ejs') %>
+</body>
+</html>

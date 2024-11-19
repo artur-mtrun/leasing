@@ -1,0 +1,57 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/operator.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="container mt-4">
+        <!-- Nagłówek strony i przycisk dodawania -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="centered-heading">Lista operatorów</h1>
+            <a href="/add-operator" class="btn btn-primary">Dodaj operatora</a>
+        </div>
+        
+        <!-- Sprawdzenie, czy istnieją operatorzy do wyświetlenia -->
+        <% if (operators.length > 0) { %>
+            <!-- Tabela z listą operatorów -->
+            <table class="table table-striped table-hover">
+                <!-- Nagłówek tabeli -->
+                <thead class="table-success">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Login</th>
+                        <th scope="col">Hasło</th>
+                        <th scope="col">Admin</th>
+                        <th scope="col">Obszar</th>
+                        <th scope="col">Akcje</th>
+                    </tr>
+                </thead>
+                <!-- Ciało tabeli -->
+                <tbody>
+                    <!-- Iteracja przez wszystkich operatorów -->
+                    <% operators.forEach((operator, index) => { %>
+                        <tr>
+                            <th scope="row"><%= index + 1 %></th>
+                            <td><%= operator.login %></td>
+                            <td>********</td>
+                            <td><%= operator.is_admin ? "Tak" : "Nie" %></td>
+                            <td><%= operator.area_id === 0 ? 'Wszystkie obszary' : (operator.Area ? operator.Area.descript : 'Brak') %></td>
+                            <td>
+                                <a href="/edit-operator/<%= operator.operator_id %>" class="btn btn-warning btn-sm">Edytuj</a>
+                                <form action="/delete-operator" method="POST" class="d-inline">
+                                    <input type="hidden" value="<%= operator.operator_id %>" name="operatorId">
+                                    <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Czy na pewno chcesz usunąć tego operatora?')">Usuń</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <!-- Komunikat wyświetlany, gdy nie ma operatorów -->
+            <div class="alert alert-info" role="alert">
+                Brak operatorów w systemie.
+            </div>
+        <% } %>
+    </main>
+<%- include('../includes/end.ejs') %>

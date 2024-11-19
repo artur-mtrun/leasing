@@ -1,0 +1,85 @@
+<%- include('../includes/head.ejs') %>
+
+
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">Dodaj czytnik</h1>
+                        <form action="/add-machine" method="POST" class="needs-validation" novalidate>
+                            <div class="mb-3">
+                                <label for="machinenumber" class="form-label">Numer czytnika</label>
+                                <input type="text" class="form-control" id="machinenumber" name="machinenumber" required>
+                                <div class="invalid-feedback">
+                                    Proszę podać numer czytnika.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="descript" class="form-label">Opis</label>
+                                <textarea class="form-control" id="descript" name="descript" rows="3" required></textarea>
+                                <div class="invalid-feedback">
+                                    Proszę podać opis czytnika.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="area_id" class="form-label">Obszar</label>
+                                <select class="form-control" id="area_id" name="area_id" required>
+                                    <option value="">Wybierz obszar</option>
+                                    <% areas.forEach(area => { %>
+                                        <option value="<%= area.area_id %>"><%= area.descript %></option>
+                                    <% }); %>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Proszę wybrać obszar.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ip" class="form-label">Adres IP</label>
+                                <input type="text" class="form-control" id="ip" name="ip" pattern="^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$" required>
+                                <div class="invalid-feedback">
+                                    Proszę podać poprawny adres IP.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="port" class="form-label">Port</label>
+                                <input type="number" class="form-control" id="port" name="port" min="1" max="65535" value="4370" required>
+                                <div class="invalid-feedback">
+                                    Proszę podać poprawny numer portu (1-65535).
+                                </div>
+                                <small class="form-text text-muted">Domyślna wartość portu to 4370.</small>
+                            </div>
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary">Dodaj czytnik</button>
+                                <a href="/machine-list" class="btn btn-secondary">Anuluj</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    // Skrypt do walidacji formularza po stronie klienta
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+    </script>
+
+<%- include('../includes/end.ejs') %>

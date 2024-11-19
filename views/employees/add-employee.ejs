@@ -1,0 +1,119 @@
+<%- include('../includes/head.ejs') %>
+<title>Dodaj pracownika</title>
+<style>
+    .narrow-form {
+        max-width: 500px;
+        margin: auto;
+    }
+    .narrow-form .form-control {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    .narrow-form .btn {
+        max-width: 200px;
+        margin: 0 auto;
+    }
+    .form-label {
+        display: block;
+        text-align: center;
+    }
+    .invalid-feedback {
+        text-align: center;
+    }
+</style>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow narrow-form">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">Dodaj nowego pracownika</h1>
+                        <% if (errorMessage) { %>
+                            <div class="alert alert-danger text-center" role="alert"><%= errorMessage %></div>
+                        <% } %>
+                        <form action="/add-employee" method="POST" class="needs-validation" novalidate>
+                            <div class="mb-3">
+                                <label for="nick" class="form-label">Nazwisko i imię</label>
+                                <input type="text" class="form-control" name="nick" id="nick" required>
+                                <div class="invalid-feedback">
+                                    Proszę podać nazwisko i imię.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="enrollnumber" class="form-label">Numer pracowniczy</label>
+                                <input type="text" class="form-control" name="enrollnumber" id="enrollnumber" required 
+                                    value="<%= new_enrollnumber %>" <%= !session.isAdmin ? 'readonly' : '' %>>
+                                <div class="invalid-feedback">
+                                    Proszę podać numer pracowniczy.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="cardnumber" class="form-label">Karta</label>
+                                <input type="text" class="form-control" name="cardnumber" id="cardnumber" required>
+                                <div class="invalid-feedback">
+                                    Proszę podać numer karty.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="area_id" class="form-label">Obszar</label>
+                                <% if (session.isAdmin) { %>
+                                    <select class="form-control" name="area_id" id="area_id" required>
+                                        <option value="">Wybierz obszar</option>
+                                        <% areas.forEach(area => { %>
+                                            <option value="<%= area.area_id %>"><%= area.descript %></option>
+                                        <% }); %>
+                                    </select>
+                                <% } else { %>
+                                    <input type="text" class="form-control" value="<%= userArea.descript %>" readonly>
+                                    <input type="hidden" name="area_id" value="<%= userArea.area_id %>">
+                                <% } %>
+                                <div class="invalid-feedback">
+                                    Proszę wybrać obszar.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="company_id" class="form-label">Firma</label>
+                                <select class="form-control" name="company_id" id="company_id" required>
+                                    <option value="">Wybierz firmę</option>
+                                    <% companies.forEach(company => { %>
+                                        <option value="<%= company.company_id %>"><%= company.company_descript %></option>
+                                    <% }); %>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Proszę wybrać firmę.
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 mt-4">
+                                <button class="btn btn-primary" type="submit">Dodaj pracownika</button>
+                                <a href="/" class="btn btn-secondary">Anuluj</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    // Skrypt do walidacji formularza po stronie klienta
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+    </script>
+
+<%- include('../includes/end.ejs') %>

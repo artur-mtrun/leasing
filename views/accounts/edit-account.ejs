@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= typeof pageTitle !== 'undefined' ? pageTitle : 'Konta' %></title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">Edytuj konto</h1>
+                        <form action="/edit-account/<%= account.account_id %>" method="POST" class="needs-validation" novalidate>
+                            <div class="mb-3">
+                                <label for="account_number" class="form-label">Numer konta</label>
+                                <input type="text" class="form-control" id="account_number" name="account_number" value="<%= account.account_number %>" required>
+                                <div class="invalid-feedback">
+                                    Proszę podać numer konta.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="account_descript" class="form-label">Opis</label>
+                                <textarea class="form-control" id="account_descript" name="account_descript" rows="3" required><%= account.account_descript %></textarea>
+                                <div class="invalid-feedback">
+                                    Proszę podać opis konta.
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                                <a href="/account-list" class="btn btn-secondary">Anuluj</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    // Skrypt do walidacji formularza po stronie klienta
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+    </script>
+
+<%- include('../includes/end.ejs') %>
+</body>
+</html>
+

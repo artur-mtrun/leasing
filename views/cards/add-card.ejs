@@ -1,0 +1,45 @@
+<%- include('../includes/head.ejs') %>
+    
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/employee.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="text-center">Dodaj nową kartę</h2>
+                    </div>
+                    <div class="card-body">
+                        <% if (locals.errorMessage) { %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= errorMessage %>
+                            </div>
+                        <% } %>
+                        <form action="/add-card" method="POST">
+                            <div class="mb-3">
+                                <label for="cardnumber" class="form-label">Numer karty</label>
+                                <input type="text" class="form-control" name="cardnumber" id="cardnumber" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="area_id" class="form-label">Obszar</label>
+                                <select class="form-control" name="area_id" id="area_id" required>
+                                    <option value="">Wybierz obszar</option>
+                                    <% areas.forEach(area => { %>
+                                        <option value="<%= area.area_id %>"><%= area.descript %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-primary" type="submit">Dodaj kartę</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+<%- include('../includes/end.ejs') %>

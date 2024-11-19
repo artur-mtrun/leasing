@@ -1,0 +1,7 @@
+utils/database.js
+config/database.js
+.env
+node_modules/
+struktura.txt
+solution.txt
+.sync_events.sh
