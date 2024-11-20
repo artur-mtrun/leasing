@@ -4,4 +4,8 @@ config/database.js
 node_modules/
 struktura.txt
 solution.txt
-scripts/sync_events.log
+scripts/sync_events.sh
+app.js
+package-lock.json
+package.json
+
