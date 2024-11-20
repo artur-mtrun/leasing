@@ -4,4 +4,4 @@ config/database.js
 node_modules/
 struktura.txt
 solution.txt
-scripts/.sync_events.sh
+scripts/sync_events.log
