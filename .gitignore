@@ -1,11 +1,11 @@
 utils/database.js
 config/database.js
 .env
-node_modules/
-struktura.txt
-solution.txt
-scripts/sync_events.sh
 app.js
 package-lock.json
 package.json
+node_modules/
+struktura.txt
+solution.txt
+scripts/sync_events.log
 
