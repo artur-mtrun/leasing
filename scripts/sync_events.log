@@ -63198,3 +63198,805 @@ DROP TABLE
 2024-11-19 11:57:08 -   - Pominięte (duplikaty): 100000
 2024-11-19 11:57:08 -   - Szybkość: 100000 rekordów/s
 2024-11-19 11:57:09 - Zakończono synchronizację
+2024-11-20 10:39:08 - === Rozpoczęcie nowej synchronizacji ===
+2024-11-20 10:39:08 - Parametry: Batch size: 100000
+2024-11-20 10:39:08 - Batch #1 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:09 - Batch #1 - Statystyki:
+2024-11-20 10:39:09 -   - Czas wykonania: 0s
+2024-11-20 10:39:09 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:09 -   - Dodane rekordy: 0
+2024-11-20 10:39:09 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:09 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:10 - Batch #2 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:10 - Batch #2 - Statystyki:
+2024-11-20 10:39:10 -   - Czas wykonania: 0s
+2024-11-20 10:39:10 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:10 -   - Dodane rekordy: 0
+2024-11-20 10:39:10 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:10 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:11 - Batch #3 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:12 - Batch #3 - Statystyki:
+2024-11-20 10:39:12 -   - Czas wykonania: 0s
+2024-11-20 10:39:12 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:12 -   - Dodane rekordy: 0
+2024-11-20 10:39:12 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:12 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:13 - Batch #4 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:13 - Batch #4 - Statystyki:
+2024-11-20 10:39:13 -   - Czas wykonania: 0s
+2024-11-20 10:39:13 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:13 -   - Dodane rekordy: 0
+2024-11-20 10:39:13 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:13 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:14 - Batch #5 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:14 - Batch #5 - Statystyki:
+2024-11-20 10:39:14 -   - Czas wykonania: 0s
+2024-11-20 10:39:14 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:14 -   - Dodane rekordy: 0
+2024-11-20 10:39:14 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:14 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:15 - Batch #6 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:16 - Batch #6 - Statystyki:
+2024-11-20 10:39:16 -   - Czas wykonania: 1s
+2024-11-20 10:39:16 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:16 -   - Dodane rekordy: 0
+2024-11-20 10:39:16 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:16 -   - Szybkość: 50000 rekordów/s
+2024-11-20 10:39:17 - Batch #7 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:17 - Batch #7 - Statystyki:
+2024-11-20 10:39:17 -   - Czas wykonania: 0s
+2024-11-20 10:39:17 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:17 -   - Dodane rekordy: 0
+2024-11-20 10:39:17 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:17 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:18 - Batch #8 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:18 - Batch #8 - Statystyki:
+2024-11-20 10:39:18 -   - Czas wykonania: 0s
+2024-11-20 10:39:18 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:18 -   - Dodane rekordy: 0
+2024-11-20 10:39:18 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:18 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:19 - Batch #9 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:20 - Batch #9 - Statystyki:
+2024-11-20 10:39:20 -   - Czas wykonania: 0s
+2024-11-20 10:39:20 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:20 -   - Dodane rekordy: 0
+2024-11-20 10:39:20 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:20 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:21 - Batch #10 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:21 - Batch #10 - Statystyki:
+2024-11-20 10:39:21 -   - Czas wykonania: 0s
+2024-11-20 10:39:21 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:21 -   - Dodane rekordy: 0
+2024-11-20 10:39:21 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:21 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:22 - Batch #11 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:22 - Batch #11 - Statystyki:
+2024-11-20 10:39:22 -   - Czas wykonania: 0s
+2024-11-20 10:39:22 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:22 -   - Dodane rekordy: 0
+2024-11-20 10:39:22 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:22 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:23 - Batch #12 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:24 - Batch #12 - Statystyki:
+2024-11-20 10:39:24 -   - Czas wykonania: 0s
+2024-11-20 10:39:24 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:24 -   - Dodane rekordy: 0
+2024-11-20 10:39:24 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:24 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:25 - Batch #13 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:25 - Batch #13 - Statystyki:
+2024-11-20 10:39:25 -   - Czas wykonania: 0s
+2024-11-20 10:39:25 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:25 -   - Dodane rekordy: 0
+2024-11-20 10:39:25 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:25 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:26 - Batch #14 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:26 - Batch #14 - Statystyki:
+2024-11-20 10:39:26 -   - Czas wykonania: 0s
+2024-11-20 10:39:26 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:26 -   - Dodane rekordy: 0
+2024-11-20 10:39:26 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:26 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:28 - Batch #15 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:28 - Batch #15 - Statystyki:
+2024-11-20 10:39:28 -   - Czas wykonania: 0s
+2024-11-20 10:39:28 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:28 -   - Dodane rekordy: 0
+2024-11-20 10:39:28 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:28 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:29 - Batch #16 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:29 - Batch #16 - Statystyki:
+2024-11-20 10:39:29 -   - Czas wykonania: 0s
+2024-11-20 10:39:29 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:29 -   - Dodane rekordy: 0
+2024-11-20 10:39:29 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:29 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:30 - Batch #17 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:30 - Batch #17 - Statystyki:
+2024-11-20 10:39:30 -   - Czas wykonania: 0s
+2024-11-20 10:39:30 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:30 -   - Dodane rekordy: 0
+2024-11-20 10:39:30 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:31 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:32 - Batch #18 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:32 - Batch #18 - Statystyki:
+2024-11-20 10:39:32 -   - Czas wykonania: 0s
+2024-11-20 10:39:32 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:32 -   - Dodane rekordy: 0
+2024-11-20 10:39:32 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:32 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:33 - Batch #19 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:33 - Batch #19 - Statystyki:
+2024-11-20 10:39:33 -   - Czas wykonania: 0s
+2024-11-20 10:39:33 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:33 -   - Dodane rekordy: 0
+2024-11-20 10:39:33 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:33 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:34 - Batch #20 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:35 - Batch #20 - Statystyki:
+2024-11-20 10:39:35 -   - Czas wykonania: 0s
+2024-11-20 10:39:35 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:35 -   - Dodane rekordy: 0
+2024-11-20 10:39:35 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:35 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:36 - Batch #21 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:36 - Batch #21 - Statystyki:
+2024-11-20 10:39:36 -   - Czas wykonania: 0s
+2024-11-20 10:39:36 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:36 -   - Dodane rekordy: 0
+2024-11-20 10:39:36 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:36 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:37 - Batch #22 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:37 - Batch #22 - Statystyki:
+2024-11-20 10:39:37 -   - Czas wykonania: 0s
+2024-11-20 10:39:37 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:37 -   - Dodane rekordy: 0
+2024-11-20 10:39:37 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:37 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:38 - Batch #23 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:39 - Batch #23 - Statystyki:
+2024-11-20 10:39:39 -   - Czas wykonania: 1s
+2024-11-20 10:39:39 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:39 -   - Dodane rekordy: 0
+2024-11-20 10:39:39 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:39 -   - Szybkość: 50000 rekordów/s
+2024-11-20 10:39:40 - Batch #24 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:40 - Batch #24 - Statystyki:
+2024-11-20 10:39:40 -   - Czas wykonania: 0s
+2024-11-20 10:39:40 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:40 -   - Dodane rekordy: 0
+2024-11-20 10:39:40 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:40 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:41 - Batch #25 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:41 - Batch #25 - Statystyki:
+2024-11-20 10:39:41 -   - Czas wykonania: 0s
+2024-11-20 10:39:41 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:41 -   - Dodane rekordy: 0
+2024-11-20 10:39:41 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:41 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:42 - Batch #26 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:43 - Batch #26 - Statystyki:
+2024-11-20 10:39:43 -   - Czas wykonania: 0s
+2024-11-20 10:39:43 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:43 -   - Dodane rekordy: 0
+2024-11-20 10:39:43 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:43 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:44 - Batch #27 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:44 - Batch #27 - Statystyki:
+2024-11-20 10:39:44 -   - Czas wykonania: 0s
+2024-11-20 10:39:44 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:44 -   - Dodane rekordy: 0
+2024-11-20 10:39:44 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:44 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:45 - Batch #28 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:45 - Batch #28 - Statystyki:
+2024-11-20 10:39:45 -   - Czas wykonania: 0s
+2024-11-20 10:39:45 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:45 -   - Dodane rekordy: 0
+2024-11-20 10:39:45 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:45 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:47 - Batch #29 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:47 - Batch #29 - Statystyki:
+2024-11-20 10:39:47 -   - Czas wykonania: 0s
+2024-11-20 10:39:47 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:47 -   - Dodane rekordy: 0
+2024-11-20 10:39:47 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:47 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:48 - Batch #30 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:48 - Batch #30 - Statystyki:
+2024-11-20 10:39:48 -   - Czas wykonania: 0s
+2024-11-20 10:39:48 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:48 -   - Dodane rekordy: 0
+2024-11-20 10:39:48 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:48 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:49 - Batch #31 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:49 - Batch #31 - Statystyki:
+2024-11-20 10:39:49 -   - Czas wykonania: 0s
+2024-11-20 10:39:49 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:49 -   - Dodane rekordy: 0
+2024-11-20 10:39:49 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:49 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:51 - Batch #32 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:51 - Batch #32 - Statystyki:
+2024-11-20 10:39:51 -   - Czas wykonania: 0s
+2024-11-20 10:39:51 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:51 -   - Dodane rekordy: 0
+2024-11-20 10:39:51 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:51 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:52 - Batch #33 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:52 - Batch #33 - Statystyki:
+2024-11-20 10:39:52 -   - Czas wykonania: 0s
+2024-11-20 10:39:52 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:52 -   - Dodane rekordy: 0
+2024-11-20 10:39:52 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:52 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:53 - Batch #34 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:53 - Batch #34 - Statystyki:
+2024-11-20 10:39:53 -   - Czas wykonania: 0s
+2024-11-20 10:39:53 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:53 -   - Dodane rekordy: 0
+2024-11-20 10:39:53 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:53 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:55 - Batch #35 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:55 - Batch #35 - Statystyki:
+2024-11-20 10:39:55 -   - Czas wykonania: 0s
+2024-11-20 10:39:55 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:55 -   - Dodane rekordy: 0
+2024-11-20 10:39:55 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:55 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:56 - Batch #36 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:56 - Batch #36 - Statystyki:
+2024-11-20 10:39:56 -   - Czas wykonania: 0s
+2024-11-20 10:39:56 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:56 -   - Dodane rekordy: 0
+2024-11-20 10:39:56 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:56 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:57 - Batch #37 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:58 - Batch #37 - Statystyki:
+2024-11-20 10:39:58 -   - Czas wykonania: 0s
+2024-11-20 10:39:58 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:58 -   - Dodane rekordy: 0
+2024-11-20 10:39:58 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:58 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:39:59 - Batch #38 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:39:59 - Batch #38 - Statystyki:
+2024-11-20 10:39:59 -   - Czas wykonania: 0s
+2024-11-20 10:39:59 -   - Przetworzone rekordy: 100000
+2024-11-20 10:39:59 -   - Dodane rekordy: 0
+2024-11-20 10:39:59 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:39:59 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:40:00 - Batch #39 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:40:00 - Batch #39 - Statystyki:
+2024-11-20 10:40:00 -   - Czas wykonania: 0s
+2024-11-20 10:40:00 -   - Przetworzone rekordy: 100000
+2024-11-20 10:40:00 -   - Dodane rekordy: 0
+2024-11-20 10:40:00 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:40:00 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:40:01 - Batch #40 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:40:02 - Batch #40 - Statystyki:
+2024-11-20 10:40:02 -   - Czas wykonania: 1s
+2024-11-20 10:40:02 -   - Przetworzone rekordy: 100000
+2024-11-20 10:40:02 -   - Dodane rekordy: 0
+2024-11-20 10:40:02 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:40:02 -   - Szybkość: 50000 rekordów/s
+2024-11-20 10:40:03 - Batch #41 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:40:03 - Batch #41 - Statystyki:
+2024-11-20 10:40:03 -   - Czas wykonania: 0s
+2024-11-20 10:40:03 -   - Przetworzone rekordy: 100000
+2024-11-20 10:40:03 -   - Dodane rekordy: 0
+2024-11-20 10:40:03 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:40:03 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:40:04 - Batch #42 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:40:04 - Batch #42 - Statystyki:
+2024-11-20 10:40:04 -   - Czas wykonania: 0s
+2024-11-20 10:40:04 -   - Przetworzone rekordy: 100000
+2024-11-20 10:40:04 -   - Dodane rekordy: 0
+2024-11-20 10:40:04 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:40:04 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:40:06 - Batch #43 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:40:06 - Batch #43 - Statystyki:
+2024-11-20 10:40:06 -   - Czas wykonania: 0s
+2024-11-20 10:40:06 -   - Przetworzone rekordy: 100000
+2024-11-20 10:40:06 -   - Dodane rekordy: 0
+2024-11-20 10:40:06 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:40:06 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:40:07 - Batch #44 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:40:07 - Batch #44 - Statystyki:
+2024-11-20 10:40:07 -   - Czas wykonania: 0s
+2024-11-20 10:40:07 -   - Przetworzone rekordy: 100000
+2024-11-20 10:40:07 -   - Dodane rekordy: 0
+2024-11-20 10:40:07 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:40:07 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:40:08 - Batch #45 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:40:08 - Batch #45 - Statystyki:
+2024-11-20 10:40:08 -   - Czas wykonania: 0s
+2024-11-20 10:40:08 -   - Przetworzone rekordy: 100000
+2024-11-20 10:40:08 -   - Dodane rekordy: 0
+2024-11-20 10:40:08 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:40:08 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:40:10 - Batch #46 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:40:10 - Batch #46 - Statystyki:
+2024-11-20 10:40:10 -   - Czas wykonania: 0s
+2024-11-20 10:40:10 -   - Przetworzone rekordy: 100000
+2024-11-20 10:40:10 -   - Dodane rekordy: 0
+2024-11-20 10:40:10 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:40:10 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:40:11 - Batch #47 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:40:11 - Batch #47 - Statystyki:
+2024-11-20 10:40:11 -   - Czas wykonania: 0s
+2024-11-20 10:40:11 -   - Przetworzone rekordy: 100000
+2024-11-20 10:40:11 -   - Dodane rekordy: 0
+2024-11-20 10:40:11 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:40:11 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:40:12 - Batch #48 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:40:13 - Batch #48 - Statystyki:
+2024-11-20 10:40:13 -   - Czas wykonania: 0s
+2024-11-20 10:40:13 -   - Przetworzone rekordy: 100000
+2024-11-20 10:40:13 -   - Dodane rekordy: 0
+2024-11-20 10:40:13 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:40:13 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:40:14 - Batch #49 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:40:14 - Batch #49 - Statystyki:
+2024-11-20 10:40:14 -   - Czas wykonania: 0s
+2024-11-20 10:40:14 -   - Przetworzone rekordy: 100000
+2024-11-20 10:40:14 -   - Dodane rekordy: 0
+2024-11-20 10:40:14 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:40:14 -   - Szybkość: 100000 rekordów/s
+2024-11-20 10:40:15 - Batch #50 - Znaleziono 3829 rekordów do przetworzenia
+SET
+SET
+BEGIN
+SELECT 0
+CREATE INDEX
+INSERT 0 0
+UPDATE 0
+COMMIT
+DROP TABLE
+2024-11-20 10:40:15 - Batch #50 - Statystyki:
+2024-11-20 10:40:15 -   - Czas wykonania: 0s
+2024-11-20 10:40:15 -   - Przetworzone rekordy: 100000
+2024-11-20 10:40:15 -   - Dodane rekordy: 0
+2024-11-20 10:40:15 -   - Pominięte (duplikaty): 100000
+2024-11-20 10:40:15 -   - Szybkość: 100000 rekordów/s
