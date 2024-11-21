@@ -5,7 +5,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev": "nodemon --watch routes --watch controllers --watch models --watch views -e js,json,ejs app.js"
+    "dev": "nodemon app.js",
+    "prod": "pm2 start ecosystem.config.js --only leasing-prod --env production",
+    "dev-pm2": "pm2 start ecosystem.config.js --only leasing-dev",
+    "stop": "pm2 stop all",
+    "status": "pm2 status",
+    "logs": "pm2 logs",
+    "delete": "pm2 delete all"
   },
   "author": "",
   "license": "ISC",

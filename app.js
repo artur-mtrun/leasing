@@ -58,7 +58,10 @@ sequelize.sync()
 .then(result => {
     //console.log(result);
     // Uruchomienie serwera na porcie 3000
-    app.listen(3000, '10.0.1.54');
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port} in ${process.env.NODE_ENV} mode`);
+    });
 })
 .catch(err => {
     console.log(err);
