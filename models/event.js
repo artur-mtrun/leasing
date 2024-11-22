@@ -28,6 +28,11 @@ const Event = sequelize.define('event', {
     event_time: {
         type: DataTypes.TIME,
         allowNull: false
+    },
+    is_del: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 });
 

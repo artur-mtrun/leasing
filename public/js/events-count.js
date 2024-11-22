@@ -130,8 +130,6 @@ function renderEventsTable(events) {
         return;
     }
 
-    let totalWorkTime = 0;
-
     events.forEach((event, index) => {
         const row = document.createElement('tr');
         
@@ -150,15 +148,24 @@ function renderEventsTable(events) {
         tableBody.appendChild(row);
     });
 
-    // Usuwamy wiersz z sumą godzin, ponieważ nie wyświetlamy już czasu pracy
+    // Dodaj nasłuchiwacze po renderowaniu
+    addDeleteEventListeners();
 }
 
 function addDeleteEventListeners() {
     console.log('Adding delete event listeners');
     const deleteButtons = document.querySelectorAll('.delete-event');
+    console.log('Found delete buttons:', deleteButtons.length);
+    
     deleteButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        // Usuń wszystkie istniejące nasłuchiwacze
+        const clone = button.cloneNode(true);
+        button.parentNode.replaceChild(clone, button);
+        
+        // Dodaj nowy nasłuchiwacz
+        clone.addEventListener('click', function() {
             const eventId = this.getAttribute('data-event-id');
+            console.log('Delete button clicked for event ID:', eventId);
             if (confirm('Czy na pewno chcesz usunąć to zdarzenie?')) {
                 deleteEvent(eventId);
             }
@@ -167,22 +174,32 @@ function addDeleteEventListeners() {
 }
 
 function deleteEvent(eventId) {
-    console.log('Deleting event with ID:', eventId);
+    console.log('Starting delete operation for event ID:', eventId);
     fetch(`/api/events/${eventId}`, {
         method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
     })
     .then(response => {
+        console.log('Delete response status:', response.status);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         return response.json();
     })
     .then(data => {
-        console.log('Zdarzenie usunięte:', data);
-        // Odśwież listę zdarzeń
-        fetchFilteredEvents();
+        console.log('Delete successful:', data);
+        // Odśwież listę zdarzeń z aktualnymi filtrami
+        const year = yearFilter.value;
+        const month = monthFilter.value;
+        const enrollnumber = employeeFilter.value;
+        fetchFilteredEvents(year, month, enrollnumber);
     })
-    .catch(error => console.error('Błąd podczas usuwania zdarzenia:', error));
+    .catch(error => {
+        console.error('Error in deleteEvent:', error);
+        alert('Wystąpił błąd podczas usuwania zdarzenia: ' + error.message);
+    });
 }
 
 function calculateWorkTime(event, previousEvent) {
@@ -213,19 +230,28 @@ function calculateWorkTime(event, previousEvent) {
     return ''; // Zwracamy pusty string zamiast '---'
 }
 
-function fetchFilteredEvents() {
-    const year = yearFilter ? yearFilter.value : new Date().getFullYear();
-    const month = monthFilter ? monthFilter.value : (new Date().getMonth() + 1).toString().padStart(2, '0');
-    const enrollnumber = employeeFilter ? employeeFilter.value : '';
+function fetchFilteredEvents(year, month, enrollnumber) {
+    year = year || yearFilter.value;
+    month = month || monthFilter.value;
+    enrollnumber = enrollnumber || employeeFilter.value;
 
-    console.log('Fetching events:', year, month, enrollnumber);
+    console.log('Fetching filtered events:', { year, month, enrollnumber });
+    
     fetch(`/api/events/filter?year=${year}&month=${month}&enrollnumber=${enrollnumber}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(events => {
             console.log('Received events:', events);
             renderEventsTable(events);
         })
-        .catch(error => console.error('Error fetching filtered events:', error));
+        .catch(error => {
+            console.error('Error fetching filtered events:', error);
+            alert('Wystąpił błąd podczas pobierania zdarzeń: ' + error.message);
+        });
 }
 
 function convertTimeToSeconds(timeString) {

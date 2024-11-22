@@ -10,6 +10,9 @@ exports.getAllEvents = async (req, res, next) => {
 }
   try {
     const events = await Event.findAll({
+      where: {
+        is_del: false
+      },
       attributes: [
         'event_id',
         'machinenumber',
@@ -19,7 +22,6 @@ exports.getAllEvents = async (req, res, next) => {
         'event_time',
         [Sequelize.literal(`(SELECT "nick" FROM "employees" WHERE "employees"."enrollnumber" = "event"."enrollnumber")`), 'nick']
       ],
-      //order: [['event_date', 'DESC'], ['event_time', 'DESC']]
       order: [['event_date', 'DESC']]
     });
     res.json(events);
@@ -71,12 +73,11 @@ exports.deleteEvent = async (req, res, next) => {
   }
   try {
     const eventId = req.params.id;
-    const event = await Event.findByPk(eventId);
-    if (!event) {
-      return res.status(404).json({ message: 'Event not found' });
-    }
-    await event.destroy();
-    res.status(200).json({ message: 'Event deleted successfully' });
+    await Event.update(
+      { is_del: true },
+      { where: { event_id: eventId } }
+    );
+    res.status(200).json({ message: 'Event marked as deleted' });
   } catch (err) {
     next(err);
   }
@@ -113,24 +114,26 @@ exports.getEventsByMonth = async (req, res) => {
 exports.getEventsByMonthAndEmployee = async (req, res) => {
     try {
         const { year, month, enrollnumber } = req.query;
-        console.log('Otrzymane parametry:', year, month, enrollnumber);
-
         const startDate = new Date(year, month - 1, 1);
         const endDate = new Date(year, month, 0, 23, 59, 59);
         console.log('Data początkowa:', startDate, 'Data końcowa:', endDate);
 
-        const whereClause = {
-            event_date: {
-                [Op.between]: [startDate, endDate]
-            }
-        };
-
-        if (enrollnumber) {
-            whereClause.enrollnumber = enrollnumber;
-        }
-
         const events = await Event.findAll({
-            where: whereClause,
+            where: {
+                enrollnumber: enrollnumber,
+                event_date: {
+                    [Op.between]: [startDate, endDate]
+                },
+                is_del: false
+            },
+            attributes: [
+                'event_id',
+                'machinenumber',
+                'enrollnumber',
+                'in_out',
+                'event_date',
+                [Sequelize.fn('to_char', Sequelize.col('event_time'), 'HH24:MI'), 'event_time']
+            ],
             order: [['event_date', 'ASC'], ['event_time', 'ASC']]
         });
 
