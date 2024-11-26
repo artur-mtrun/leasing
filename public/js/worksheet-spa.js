@@ -293,29 +293,34 @@ function formatTimeMinutes(timeInMinutes) {
 }
 
 function calculateWorkTime(inEvent, outEvent) {
+    if (!inEvent || !outEvent || !inEvent.event_time || !outEvent.event_time) {
+        return 0;
+    }
+
     const inTime = parseDateTime(inEvent.event_date, inEvent.event_time);
     const outTime = parseDateTime(outEvent.event_date, outEvent.event_time);
     
     if (inTime && outTime) {
         let diffInMinutes = (outTime - inTime) / (1000 * 60);
         
-        // Jeśli czas wyjścia jest wcześniejszy niż czas wejścia, zakładamy, e wyjście było następnego dnia
+        // Jeśli czas wyjścia jest wcześniejszy niż czas wejścia, zakładamy, że wyjście było następnego dnia
         if (diffInMinutes < 0) {
             diffInMinutes += 24 * 60; // dodajemy 24 godziny w minutach
         }
         
-        return Math.round(diffInMinutes); // Zaokrąglamy do najbliższej liczby całkowitej
+        return Math.round(diffInMinutes);
     }
     return 0;
 }
 
 function parseDateTime(dateString, timeString) {
-    // Zakładamy, że dateString jest w formacie 'YYYY-MM-DDT00:00:00.000Z'
+    if (!dateString || !timeString) return null;
+    
     const [datePart] = dateString.split('T');
     const [year, month, day] = datePart.split('-');
-    const [hours, minutes, seconds] = timeString.split(':');
+    const [hours, minutes] = timeString.split(':');
     
-    return new Date(year, month - 1, day, hours, minutes, seconds);
+    return new Date(year, month - 1, day, hours, minutes);
 }
 
 async function getWorksheetDataForDay(year, month, day) {
