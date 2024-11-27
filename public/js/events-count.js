@@ -135,11 +135,31 @@ function renderEventsTable(events) {
     }
 
     events.forEach((event, index) => {
-        // Określamy kolor tła w zależności od numeru czytnika i statusu
+        // Sprawdzamy poprzednie i następne zdarzenie dla tego samego pracownika
+        const prevEvent = index > 0 ? events[index - 1] : null;
+        const nextEvent = index < events.length - 1 ? events[index + 1] : null;
+        
+        // Sprawdzamy czy jest nieprawidłowa sekwencja
+        const isInvalidSequence = 
+            // Sprawdzamy czy to ten sam pracownik
+            ((prevEvent && prevEvent.enrollnumber === event.enrollnumber && 
+              // Dwa wejścia pod rząd
+              (prevEvent.in_out === 2 && event.in_out === 2)) ||
+             // Dwa wyjścia pod rząd
+             (prevEvent && prevEvent.enrollnumber === event.enrollnumber && 
+              prevEvent.in_out === 3 && event.in_out === 3) ||
+             // To samo dla następnego zdarzenia
+             (nextEvent && nextEvent.enrollnumber === event.enrollnumber && 
+              event.in_out === nextEvent.in_out));
+
+        // Określamy kolor tła
         let backgroundColor;
-        if (event.machinenumber === 0) {
-            // Dla czytnika 0: bardziej intensywny czerwony dla wejścia i wyjścia
-            backgroundColor = event.in_out === 2 ? '#ffe0e0' : '#ffeded';
+        if (isInvalidSequence) {
+            // Kolor dla nieprawidłowej sekwencji
+            backgroundColor = '#ff9999'; // Czerwony dla błędów
+        } else if (event.machinenumber === 0) {
+            // Dla czytnika 0: bardziej intensywne żółte tło
+            backgroundColor = event.in_out === 2 ? '#fff2cc' : '#fff7e6';
         } else {
             // Dla pozostałych czytników: jasny szary dla wejścia, biały dla wyjścia
             backgroundColor = event.in_out === 2 ? '#f0f0f0' : 'white';
