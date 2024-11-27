@@ -53,16 +53,25 @@ exports.createEvent = async (req, res, next) => {
 exports.updateEvent = async (req, res, next) => {
   if (!req.session.isLoggedIn) {
     return res.status(401).json({ message: 'Unauthorized' });
-}
+  }
   try {
-    const event = await Event.findByPk(req.params.id);
+    const event = await Event.findOne({
+      where: {
+        event_id: req.params.id,
+        is_del: false
+      }
+    });
+    
     if (event) {
-      await event.update(req.body);
+      await event.update({
+        in_out: req.body.in_out
+      });
       res.json(event);
     } else {
       res.status(404).json({ message: 'Event not found' });
     }
   } catch (err) {
+    console.error('Error in updateEvent:', err);
     next(err);
   }
 };

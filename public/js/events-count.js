@@ -142,7 +142,10 @@ function renderEventsTable(events) {
             <td>${new Date(event.event_date).toLocaleDateString()}</td>
             <td>${event.event_time}</td>
             <td>
-                <button class="btn btn-danger btn-sm delete-event" data-event-id="${event.event_id}">Usuń zdarzenie</button>
+                <button class="btn btn-danger btn-sm delete-event me-2" data-event-id="${event.event_id}">Usuń zdarzenie</button>
+                <button class="btn btn-warning btn-sm toggle-status" data-event-id="${event.event_id}" data-current-status="${event.in_out}">
+                    Zamień status
+                </button>
             </td>
         `;
         tableBody.appendChild(row);
@@ -150,6 +153,7 @@ function renderEventsTable(events) {
 
     // Dodaj nasłuchiwacze po renderowaniu
     addDeleteEventListeners();
+    addToggleStatusListeners();
 }
 
 function addDeleteEventListeners() {
@@ -265,4 +269,53 @@ function formatSeconds(totalSeconds) {
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+// Dodaj nową funkcję dla obsługi przycisków zmiany statusu
+function addToggleStatusListeners() {
+    const toggleButtons = document.querySelectorAll('.toggle-status');
+    
+    toggleButtons.forEach(button => {
+        const clone = button.cloneNode(true);
+        button.parentNode.replaceChild(clone, button);
+        
+        clone.addEventListener('click', function() {
+            const eventId = this.getAttribute('data-event-id');
+            const currentStatus = parseInt(this.getAttribute('data-current-status'));
+            const newStatus = currentStatus === 2 ? 3 : 2;
+            
+            if (confirm('Czy na pewno chcesz zmienić status tego zdarzenia?')) {
+                toggleEventStatus(eventId, newStatus);
+            }
+        });
+    });
+}
+
+// Dodaj nową funkcję do obsługi zmiany statusu
+function toggleEventStatus(eventId, newStatus) {
+    fetch(`/api/events/${eventId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ in_out: newStatus })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Status changed successfully:', data);
+        // Odśwież listę zdarzeń z aktualnymi filtrami
+        const year = yearFilter.value;
+        const month = monthFilter.value;
+        const enrollnumber = employeeFilter.value;
+        fetchFilteredEvents(year, month, enrollnumber);
+    })
+    .catch(error => {
+        console.error('Error in toggleEventStatus:', error);
+        alert('Wystąpił błąd podczas zmiany statusu: ' + error.message);
+    });
 }
