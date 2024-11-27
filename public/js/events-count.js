@@ -125,30 +125,45 @@ function renderEventsTable(events) {
     const tableBody = document.getElementById('events-list');
     tableBody.innerHTML = '';
 
+    // Usuń klasę table-striped z tabeli
+    const table = tableBody.closest('table');
+    table.classList.remove('table-striped');
+
     if (events.length === 0) {
         tableBody.innerHTML = '<tr><td colspan="8">Brak danych do wyświetlenia</td></tr>';
         return;
     }
 
     events.forEach((event, index) => {
-        const row = document.createElement('tr');
+        // Określamy kolor tła w zależności od numeru czytnika i statusu
+        let backgroundColor;
+        if (event.machinenumber === 0) {
+            // Dla czytnika 0: bardziej intensywny czerwony dla wejścia i wyjścia
+            backgroundColor = event.in_out === 2 ? '#ffe0e0' : '#ffeded';
+        } else {
+            // Dla pozostałych czytników: jasny szary dla wejścia, biały dla wyjścia
+            backgroundColor = event.in_out === 2 ? '#f0f0f0' : 'white';
+        }
         
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${event.machinenumber}</td>
-            <td>${event.enrollnumber}</td>
-            <td>${event.nick || 'Unknown'}</td>
-            <td>${event.in_out === 2 ? 'We' : 'Wy'}</td>
-            <td>${new Date(event.event_date).toLocaleDateString()}</td>
-            <td>${event.event_time}</td>
-            <td>
-                <button class="btn btn-danger btn-sm delete-event me-2" data-event-id="${event.event_id}">Usuń zdarzenie</button>
-                <button class="btn btn-warning btn-sm toggle-status" data-event-id="${event.event_id}" data-current-status="${event.in_out}">
-                    Zamień status
-                </button>
-            </td>
+        const cellStyle = `style="background-color: ${backgroundColor} !important"`;
+        const row = `
+            <tr ${cellStyle}>
+                <td ${cellStyle}>${index + 1}</td>
+                <td ${cellStyle}>${event.machinenumber}</td>
+                <td ${cellStyle}>${event.enrollnumber}</td>
+                <td ${cellStyle}>${event.nick || 'Unknown'}</td>
+                <td ${cellStyle}>${event.in_out === 2 ? 'We' : 'Wy'}</td>
+                <td ${cellStyle}>${new Date(event.event_date).toLocaleDateString()}</td>
+                <td ${cellStyle}>${event.event_time}</td>
+                <td ${cellStyle}>
+                    <button class="btn btn-danger btn-sm delete-event me-2" data-event-id="${event.event_id}">Usuń zdarzenie</button>
+                    <button class="btn btn-warning btn-sm toggle-status" data-event-id="${event.event_id}" data-current-status="${event.in_out}">
+                        Zamień status
+                    </button>
+                </td>
+            </tr>
         `;
-        tableBody.appendChild(row);
+        tableBody.insertAdjacentHTML('beforeend', row);
     });
 
     // Dodaj nasłuchiwacze po renderowaniu

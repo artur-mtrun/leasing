@@ -116,3 +116,31 @@
   background-color: #082742;
   border-color: #191d20;
 }
+
+/* Style dla wierszy zdarzeń */
+.table tr.event-entry {
+    background-color: white !important;
+}
+
+.table tr.event-entry-in {
+    background-color: #d4f5d4 !important;
+}
+
+/* Hover effects */
+.table tr.event-entry:hover {
+    opacity: 0.9;
+}
+
+.table tr.event-entry-in:hover {
+    opacity: 0.9;
+}
+
+/* Wyłącz wszystkie inne style tła */
+.table tr {
+    background-image: none !important;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd),
+.table-striped > tbody > tr:nth-of-type(even) {
+    background-color: transparent !important;
+}
