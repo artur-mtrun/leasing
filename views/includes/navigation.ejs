@@ -38,6 +38,9 @@
                     <a class="nav-link <%= path === '/events-count' ? 'active' : '' %>" href="/events-count">Zdarzenia</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link <%= path === '/worksheets-spa' ? 'active' : '' %>" href="/worksheets-spa">Karty pracy</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link <%= path === '/worksheet-report' ? 'active' : '' %>" href="/worksheet-report">Raporty</a>
                 </li>
                 <% if (isAuthenticated && isAdmin) { %>

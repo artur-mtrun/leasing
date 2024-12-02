@@ -1,6 +1,9 @@
 const { OperatorLog, Operator } = require('../models/associations');
 
 exports.getLogs = async (req, res) => {
+    if (!req.session.isLoggedIn) {
+        return res.redirect('/login');
+    }
     try {
         const logs = await OperatorLog.findAll({
             include: [{
