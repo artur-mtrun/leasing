@@ -404,7 +404,7 @@ function fetchAccounts() {
 // Dodaj tę nową funkcję
 function createAccountSelect(selectedAccountId, includeDefaultOption = true) {
     const select = document.createElement('select');
-    select.classList.add('form-control', 'form-control-sm');
+    select.classList.add('form-control', 'form-control-sm', 'account-select');
     
     if (includeDefaultOption) {
         const defaultOption = document.createElement('option');
@@ -416,12 +416,53 @@ function createAccountSelect(selectedAccountId, includeDefaultOption = true) {
     accounts.forEach(account => {
         const option = document.createElement('option');
         option.value = account.account_id;
-        option.textContent = `${account.account_number} - ${account.account_descript}`;
+        option.textContent = `${account.account_id} - ${account.account_descript}`;
         if (account.account_id === selectedAccountId) {
             option.selected = true;
         }
         select.appendChild(option);
     });
+
+    // Inicjalizuj Select2 na nowym elemencie
+    setTimeout(() => {
+        $(select).select2({
+            theme: 'bootstrap-5',
+            width: '100%',
+            language: {
+                noResults: function() {
+                    return "Nie znaleziono konta";
+                },
+                searching: function() {
+                    return "Wyszukiwanie...";
+                }
+            },
+            placeholder: 'Wybierz lub wyszukaj konto',
+            allowClear: includeDefaultOption,
+            matcher: function(params, data) {
+                // Jeśli nie ma szukanej frazy, zwróć wszystkie wyniki
+                if ($.trim(params.term) === '') {
+                    return data;
+                }
+
+                // Nie szukaj w pustych danych
+                if (typeof data.text === 'undefined') {
+                    return null;
+                }
+
+                // Konwertuj do małych liter dla lepszego wyszukiwania
+                const searchTerm = params.term.toLowerCase();
+                const textToSearch = data.text.toLowerCase();
+
+                // Szukaj zarówno w ID jak i w opisie
+                if (textToSearch.indexOf(searchTerm) > -1) {
+                    return data;
+                }
+
+                // Jeśli nie znaleziono, zwróć null
+                return null;
+            }
+        });
+    }, 0);
 
     return select;
 }

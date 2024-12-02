@@ -21,7 +21,9 @@ app.use(session({ secret: 'DupaDupa_321', resave: false, saveUninitialized: fals
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
-
+app.use('/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
+app.use('/select2', express.static(path.join(__dirname, 'node_modules/select2/dist')));
+app.use('/select2-bootstrap-5-theme', express.static(path.join(__dirname, 'node_modules/select2-bootstrap-5-theme')));
 
 const eventsApiRoutes = require('./routes/eventsAPI');
 const cardRoutes = require('./routes/card');
