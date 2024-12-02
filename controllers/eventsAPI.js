@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 const {Event} = require('../models/event');
 //const {Employee} = require('../models/employee');
 const { Op } = require('sequelize');
-const { AllEvent, Employee } = require('../models/associations');
+const { AllEvent, Employee, Worksheet, Account } = require('../models/associations');
 const { logAction } = require('../middleware/logger');
 
 
@@ -76,25 +76,69 @@ exports.updateEvent = async (req, res, next) => {
     });
     
     if (event) {
+      const oldInOut = event.in_out;
       await event.update({
         in_out: req.body.in_out
       });
 
-      // Poprawiony log
+      // Znajdź powiązany wpis w worksheet wraz z danymi konta
+      const worksheetEntry = await Worksheet.findOne({
+        where: {
+          enrollnumber: event.enrollnumber,
+          event_date: event.event_date
+        },
+        include: {
+          model: Account,
+          required: true,
+          attributes: ['account_id', 'account_descript']
+        }
+      });
+
+      if (worksheetEntry) {
+        const hours = Math.floor(worksheetEntry.work_time / 60);
+        const minutes = worksheetEntry.work_time % 60;
+        const formattedWorkTime = `${hours}:${minutes.toString().padStart(2, '0')}`;
+
+        const date = new Date(worksheetEntry.event_date);
+        const formattedDate = `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}`;
+
+        await worksheetEntry.destroy();
+        await logAction(
+          req.session.operator_id,
+          'DELETE',
+          'WORKSHEET',
+          worksheetEntry.worksheet_id,
+          `Usunięto wpis w arkuszu po zmianie typu zdarzenia z ${oldInOut === 2 ? 'Wejście' : 'Wyjście'} na ${event.in_out === 2 ? 'Wejście' : 'Wyjście'}, ` +
+          `data: ${formattedDate}, ` +
+          `konto: ${worksheetEntry.account.account_id} - ${worksheetEntry.account.account_descript}, ` +
+          `wejście: ${worksheetEntry.in_time}, wyjście: ${worksheetEntry.out_time}, ` +
+          `czas pracy: ${formattedWorkTime}h`
+        );
+      }
+
+      // Formatowanie daty dla eventu
+      const eventDate = new Date(event.event_date);
+      const formattedEventDate = `${eventDate.getDate().toString().padStart(2, '0')}.${(eventDate.getMonth() + 1).toString().padStart(2, '0')}.${eventDate.getFullYear()}`;
+
       await logAction(
         req.session.operator_id,
         'UPDATE',
         'EVENT',
         event.event_id,
-        `Zaktualizowano zdarzenie dla pracownika: ${event.enrollnumber}, nowa wartość wejście/wyjście: ${event.in_out ? 'Wejście' : 'Wyjście'}`
+        `Zmieniono typ zdarzenia dla pracownika: ${event.enrollnumber}, z ${oldInOut === 2 ? 'Wejście' : 'Wyjście'} na ${event.in_out === 2 ? 'Wejście' : 'Wyjście'}, ` +
+        `data: ${formattedEventDate}, godzina: ${event.event_time}`
       );
 
-      res.json(event);
+      res.json({ 
+        event,
+        message: 'Event and related worksheet entries updated successfully' 
+      });
     } else {
       res.status(404).json({ message: 'Event not found' });
     }
   } catch (err) {
     console.error('Error in updateEvent:', err);
+    console.error('Szczegóły worksheetEntry:', JSON.stringify(err.worksheetEntry, null, 2));
     next(err);
   }
 };
@@ -109,16 +153,58 @@ exports.deleteEvent = async (req, res, next) => {
       return res.status(404).json({ message: 'Event not found' });
     }
 
-    // Pobierz dane przed usunięciem
-    const eventDetails = `Usunięto zdarzenie dla pracownika: ${event.enrollnumber}, typ: ${event.in_out ? 'Wejście' : 'Wyjście'}, ` +
-                         `data: ${event.event_date.toLocaleDateString()}, godzina: ${event.event_time}`;
+    // Znajdź powiązany wpis w worksheet wraz z danymi konta
+    const worksheetEntry = await Worksheet.findOne({
+      where: {
+        enrollnumber: event.enrollnumber,
+        event_date: event.event_date
+      },
+      include: [
+        { 
+          model: Account,
+          required: true,
+          attributes: ['account_id', 'account_descript']
+        }
+      ]
+    });
+
+    // Formatowanie daty dla eventu
+    const eventDate = new Date(event.event_date);
+    const formattedEventDate = `${eventDate.getDate().toString().padStart(2, '0')}.${(eventDate.getMonth() + 1).toString().padStart(2, '0')}.${eventDate.getFullYear()}`;
+
+    const eventDetails = `Usunięto zdarzenie dla pracownika: ${event.enrollnumber}, typ: ${event.in_out === 2 ? 'Wejście' : 'Wyjście'}, ` +
+                        `data: ${formattedEventDate}, godzina: ${event.event_time}`;
+
+    // Jeśli istnieje wpis w worksheet, usuń go
+    if (worksheetEntry) {
+      // Formatowanie czasu pracy z minut na format godzinowy
+      const hours = Math.floor(worksheetEntry.work_time / 60);
+      const minutes = worksheetEntry.work_time % 60;
+      const formattedWorkTime = `${hours}:${minutes.toString().padStart(2, '0')}`;
+
+      // Formatowanie daty dla worksheet
+      const worksheetDate = new Date(worksheetEntry.event_date);
+      const formattedWorksheetDate = `${worksheetDate.getDate().toString().padStart(2, '0')}.${(worksheetDate.getMonth() + 1).toString().padStart(2, '0')}.${worksheetDate.getFullYear()}`;
+
+      await worksheetEntry.destroy();
+      await logAction(
+        req.session.operator_id,
+        'DELETE',
+        'WORKSHEET',
+        worksheetEntry.worksheet_id,
+        `Usunięto wpis w arkuszu po usunięciu zdarzenia ${event.in_out === 2 ? 'wejścia' : 'wyjścia'}, ` +
+        `data: ${formattedWorksheetDate}, ` +
+        `konto: ${worksheetEntry.account.account_id} - ${worksheetEntry.account.account_descript}, ` +
+        `wejście: ${worksheetEntry.in_time}, wyjście: ${worksheetEntry.out_time}, ` +
+        `czas pracy: ${formattedWorkTime}h`
+      );
+    }
 
     await Event.update(
       { is_del: true },
       { where: { event_id: req.params.id } }
     );
 
-    // Dodajemy log
     await logAction(
       req.session.operator_id,
       'DELETE',
@@ -127,7 +213,7 @@ exports.deleteEvent = async (req, res, next) => {
       eventDetails
     );
 
-    res.status(200).json({ message: 'Event marked as deleted' });
+    res.status(200).json({ message: 'Event and related worksheet entries updated successfully' });
   } catch (err) {
     console.error('Błąd podczas usuwania zdarzenia:', err);
     next(err);

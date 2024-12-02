@@ -8,6 +8,7 @@ const { Operator } = require('./operator');
 const { Machine } = require('./machine');
 const { AllEvent } = require('./allEvent');
 const { OperatorLog } = require('./operatorLog');
+const { Event } = require('./event');
 
 // Istniejące asocjacje
 Employee.belongsTo(Company, { foreignKey: 'company_id', as: 'Company' });
@@ -70,4 +71,15 @@ Employee.hasMany(AllEvent, {
 OperatorLog.belongsTo(Operator, { foreignKey: 'operator_id', as: 'Operator' });
 Operator.hasMany(OperatorLog, { foreignKey: 'operator_id', as: 'Logs' });
 
-module.exports = { Company, Employee, Worksheet, Account, Card, Area, Operator, Machine, AllEvent, OperatorLog };
+// Relacja Worksheet - Account
+Worksheet.belongsTo(Account, {
+    foreignKey: 'account_id',
+    onDelete: 'RESTRICT',
+    onUpdate: 'CASCADE'
+});
+
+Account.hasMany(Worksheet, {
+    foreignKey: 'account_id'
+});
+
+module.exports = { Company, Employee, Worksheet, Account, Card, Area, Operator, Machine, AllEvent, OperatorLog, Event };
