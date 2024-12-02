@@ -45,6 +45,7 @@ exports.postLogin = async (req, res, next) => {
             req.session.isLoggedIn = true;
             req.session.area_id = user.area_id;
             req.session.isAdmin = user.is_admin;
+            req.session.operator_id = user.operator_id;
             console.log('Admin:', req.session.isAdmin);
             console.log('Obszar:', req.session.area_id);
             // Zapisanie sesji i przekierowanie na stronę główną

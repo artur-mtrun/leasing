@@ -1,5 +1,6 @@
 const { Employee, Company, Area } = require('../models/associations');
 const { validationResult } = require('express-validator');
+const { logAction } = require('../middleware/logger');
 const { 
     checkAuth, 
     handleValidationErrors, 
@@ -83,14 +84,11 @@ exports.postAddEmployee = async (req, res, next) => {
     
     if (handleValidationErrors(req, errors)) {
         return req.session.save(err => {
-            if (err) {
-                console.error('Błąd zapisu sesji:', err);
-            }
+            if (err) console.error('Błąd zapisu sesji:', err);
             res.redirect('/add-employee');
         });
     }
     
-    console.log('Dodawanie pracownika: ', nick, enrollnumber, area_id, cardnumber, company_id, to_send);
     try {
         const newEmployee = await Employee.create({
             nick,
@@ -100,41 +98,51 @@ exports.postAddEmployee = async (req, res, next) => {
             company_id,
             to_send
         });
+
+        await logAction(
+            req.session.operator_id,
+            'CREATE',
+            'EMPLOYEE',
+            newEmployee.employee_id,
+            `Dodano pracownika: ${nick} (ID: ${enrollnumber})`
+        );
+
         console.log('Pracownik dodany pomyślnie:', newEmployee.toJSON());
         res.redirect('/');
     } catch (err) {
-        console.error('Błąd podczas dodawania pracownika:');
-        console.error('Nazwa błędu:', err.name);
-        console.error('Wiadomość błędu:', err.message);
-        console.error('Stos błędu:', err.stack);
-        if (err.errors) {
-            console.error('Szczegóły błędów walidacji:');
-            err.errors.forEach(error => {
-                console.error('Pole:', error.path);
-                console.error('Typ:', error.type);
-                console.error('Wiadomość:', error.message);
-            });
-        }
+        console.error('Błąd podczas dodawania pracownika:', err);
         next(err);
     }
 };
 exports.postRemoveCard = async (req, res, next) => {
     if (!checkAuth(req, res)) return;
     const employee_id = req.body.employee_id;
-    console.log('Usuwanie karty dla pracownika: ', employee_id);
+    
     try {
-        // Znajdź pracownika
         const employee = await Employee.findByPk(employee_id);
         
         if (!employee) {
             console.log('Nie znaleziono pracownika.',employee_id);
             return res.redirect('/');
         }
-        // Usuń przypisanie karty do pracownika
-        //employee.cardnumber = null;
-        //await employee.save();
+
+        const oldCardNumber = employee.cardnumber;
         await employee.update({ cardnumber: null });
-        // Przekieruj z powrotem do listy pracowników
+
+        console.log('Session data:', {
+            operator_id: req.session.operator_id,
+            isLoggedIn: req.session.isLoggedIn,
+            isAdmin: req.session.isAdmin
+        });
+
+        await logAction(
+            req.session.operator_id,
+            'UPDATE',
+            'EMPLOYEE',
+            employee_id,
+            `Usunięto kartę ${oldCardNumber} pracownikowi: ${employee.nick}`
+        );
+
         res.redirect('/');
     } catch (error) {
         console.error('Błąd podczas usuwania karty:', error);
@@ -142,34 +150,38 @@ exports.postRemoveCard = async (req, res, next) => {
     }
 };
 
-
 exports.postAssignCard = async (req, res, next) => {
     if (!checkAuth(req, res)) return;
     const employee_id = req.body.employee_id;
     const cardnumber = req.body.cardnumber;
     const errors = validationResult(req);
+    
     if(handleValidationErrors(req, errors)) {
         return req.session.save(err => {
-            if(err) {
-                console.error('Błąd zapisu sesji:', err);
-            }
+            if(err) console.error('Błąd zapisu sesji:', err);
             res.redirect('/');
         });
     }
+    
     try {
-        console.log('Szukanie pracownika');
         const employee = await Employee.findByPk(employee_id);
         if (!employee) {
             console.log('Nie znaleziono pracownika');
             return res.redirect('/');
         }
-        console.log('Pracownik: ', employee);
-        console.log('Nowa karta: ', cardnumber);
+
+        const oldCardNumber = employee.cardnumber;
         employee.cardnumber = cardnumber;
-        console.log('Karta po zmianie: ', employee.cardnumber);
         await employee.save();
-        console.log("Karta została pomyślnie przypisana do pracownika.");
-        console.log('Karta po zmianie na końcu: ', employee.cardnumber);
+
+        await logAction(
+            req.session.operator_id,
+            'UPDATE',
+            'EMPLOYEE',
+            employee_id,
+            `Zmieniono kartę pracownika ${employee.nick} z ${oldCardNumber || 'brak'} na ${cardnumber}`
+        );
+
         res.redirect('/');
     } catch (error) {
         console.error('Błąd podczas przypisywania karty:', error);

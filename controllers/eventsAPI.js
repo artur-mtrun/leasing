@@ -1,7 +1,9 @@
 const { Sequelize } = require('sequelize');
 const {Event} = require('../models/event');
-const {Employee} = require('../models/employee');
+//const {Employee} = require('../models/employee');
 const { Op } = require('sequelize');
+const { AllEvent, Employee } = require('../models/associations');
+const { logAction } = require('../middleware/logger');
 
 
 exports.getAllEvents = async (req, res, next) => {
@@ -34,7 +36,7 @@ exports.getAllEvents = async (req, res, next) => {
 exports.createEvent = async (req, res, next) => {
   if (!req.session.isLoggedIn) {
     return res.status(401).json({ message: 'Unauthorized' });
-}
+  }
   try {
     const { machinenumber, enrollnumber, in_out, event_date, event_time } = req.body;
     const event = await Event.create({
@@ -44,8 +46,19 @@ exports.createEvent = async (req, res, next) => {
       event_date,
       event_time
     });
+
+    // Poprawiony log - używamy event.event_id zamiast event.id
+    await logAction(
+      req.session.operator_id,
+      'CREATE',
+      'EVENT',
+      event.event_id,
+      `Dodano zdarzenie dla pracownika: ${event.enrollnumber}, wejście/wyjście: ${event.in_out ? 'Wejście' : 'Wyjście'}`
+    );
+
     res.status(201).json(event);
   } catch (err) {
+    console.error('Błąd podczas tworzenia zdarzenia:', err);
     next(err);
   }
 };
@@ -66,6 +79,16 @@ exports.updateEvent = async (req, res, next) => {
       await event.update({
         in_out: req.body.in_out
       });
+
+      // Poprawiony log
+      await logAction(
+        req.session.operator_id,
+        'UPDATE',
+        'EVENT',
+        event.event_id,
+        `Zaktualizowano zdarzenie dla pracownika: ${event.enrollnumber}, nowa wartość wejście/wyjście: ${event.in_out ? 'Wejście' : 'Wyjście'}`
+      );
+
       res.json(event);
     } else {
       res.status(404).json({ message: 'Event not found' });
@@ -81,16 +104,36 @@ exports.deleteEvent = async (req, res, next) => {
     return res.status(401).json({ message: 'Unauthorized' });
   }
   try {
-    const eventId = req.params.id;
+    const event = await Event.findByPk(req.params.id);
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    // Pobierz dane przed usunięciem
+    const eventDetails = `Usunięto zdarzenie dla pracownika: ${event.enrollnumber}, typ: ${event.in_out ? 'Wejście' : 'Wyjście'}, ` +
+                         `data: ${event.event_date.toLocaleDateString()}, godzina: ${event.event_time}`;
+
     await Event.update(
       { is_del: true },
-      { where: { event_id: eventId } }
+      { where: { event_id: req.params.id } }
     );
+
+    // Dodajemy log
+    await logAction(
+      req.session.operator_id,
+      'DELETE',
+      'EVENT',
+      event.event_id,
+      eventDetails
+    );
+
     res.status(200).json({ message: 'Event marked as deleted' });
   } catch (err) {
+    console.error('Błąd podczas usuwania zdarzenia:', err);
     next(err);
   }
 };
+
 
 exports.getEventsByMonth = async (req, res) => {
     try {

@@ -7,6 +7,7 @@ const { Area } = require('./area');
 const { Operator } = require('./operator');
 const { Machine } = require('./machine');
 const { AllEvent } = require('./allEvent');
+const { OperatorLog } = require('./operatorLog');
 
 // Istniejące asocjacje
 Employee.belongsTo(Company, { foreignKey: 'company_id', as: 'Company' });
@@ -65,4 +66,8 @@ Employee.hasMany(AllEvent, {
     as: 'AllEvents'
 });
 
-module.exports = { Company, Employee, Worksheet, Account, Card, Area, Operator, Machine, AllEvent };
+// Dodaj asocjacje dla logów
+OperatorLog.belongsTo(Operator, { foreignKey: 'operator_id', as: 'Operator' });
+Operator.hasMany(OperatorLog, { foreignKey: 'operator_id', as: 'Logs' });
+
+module.exports = { Company, Employee, Worksheet, Account, Card, Area, Operator, Machine, AllEvent, OperatorLog };

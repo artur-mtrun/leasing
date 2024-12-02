@@ -5,6 +5,7 @@ const { Op } = require('sequelize');
 const { Account } = require('../models/account');
 const { getEventsByMonthAndEmployee } = require('./eventsAPI');
 const { Company } = require('../models/company');
+const { logAction } = require('../middleware/logger');
 
 
 exports.getWorksheets = async (req, res) => {
@@ -19,6 +20,15 @@ exports.getWorksheets = async (req, res) => {
 exports.createWorksheet = async (req, res) => {
   try {
     const worksheet = await Worksheet.create(req.body);
+
+    await logAction(
+      req.session.operator_id,
+      'CREATE',
+      'WORKSHEET',
+      worksheet.worksheet_id,
+      `Dodano wpis w arkuszu dla pracownika: ${worksheet.enrollnumber}, data: ${worksheet.event_date}`
+    );
+
     res.status(201).json(worksheet);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -75,9 +85,6 @@ exports.addWorksheetEntry = async (req, res) => {
     try {
         const { day, month, year, enrollnumber, machinenumber, in_time, out_time, account_id, work_time } = req.body;
         
-        console.log('Otrzymany czas pracy:', work_time); // Dodaj to dla debugowania
-
-        // Sprawdź, czy pracownik istnieje
         const employee = await Employee.findOne({
             where: { enrollnumber: enrollnumber }
         });
@@ -86,11 +93,13 @@ exports.addWorksheetEntry = async (req, res) => {
             return res.status(400).json({ message: 'Nie znaleziono pracownika o podanym enrollnumber' });
         }
 
-        // Tworzenie daty z otrzymanych danych
         const event_date = new Date(year, month - 1, day);
-        console.log('Utworzona data:', event_date);
+        
+        // Konwersja minut na format godzinowy
+        const hours = Math.floor(work_time / 60);
+        const minutes = work_time % 60;
+        const formattedTime = `${hours}:${minutes.toString().padStart(2, '0')}`;
 
-        // Tworzenie nowego wpisu
         const newEntry = await Worksheet.create({
             enrollnumber,
             event_date,
@@ -99,10 +108,22 @@ exports.addWorksheetEntry = async (req, res) => {
             out_time,
             account_id,
             company_id: employee.company_id,
-            work_time // Używamy przesłanej wartości work_time bez modyfikacji
+            work_time
         });
 
-        console.log('Utworzony nowy wpis:', newEntry);
+        // Pobierz dane konta
+        const account = await Account.findByPk(account_id);
+        const accountInfo = account ? `${account.account_number} - ${account.account_descript}` : account_id;
+
+        // Dodajemy log z poprawionym formatem czasu i informacją o koncie
+        await logAction(
+            req.session.operator_id,
+            'CREATE',
+            'WORKSHEET',
+            newEntry.worksheet_id,
+            `Dodano wpis w arkuszu dla pracownika: ${enrollnumber}, data: ${event_date.toLocaleDateString()}, ` +
+            `czas pracy: ${formattedTime}h, konto: ${accountInfo}`
+        );
 
         res.status(201).json({ message: 'Wpis dodany pomyślnie', entry: newEntry });
     } catch (error) {
@@ -117,6 +138,12 @@ exports.postEditEntry = async (req, res) => {
         const { day, month, year, enrollnumber, machinenumber, in_time, out_time, account_id, work_time } = req.body;
         
         const event_date = new Date(year, month - 1, day);
+
+        // Pobierz stary wpis przed aktualizacją
+        const oldEntry = await Worksheet.findByPk(id);
+        if (!oldEntry) {
+            return res.status(404).json({ message: 'Wpis nie został znaleziony' });
+        }
 
         const [updatedCount, updatedEntries] = await Worksheet.update(
             {
@@ -138,7 +165,27 @@ exports.postEditEntry = async (req, res) => {
             return res.status(404).json({ message: 'Wpis nie został znaleziony' });
         }
 
-        res.status(200).json({ message: 'Wpis zaktualizowany pomyślnie', entry: updatedEntries[0] });
+        const updatedEntry = updatedEntries[0];
+
+        // Przygotuj szczegóły zmian
+        const changes = [];
+        if (oldEntry.work_time !== work_time) {
+            changes.push(`zmiana czasu pracy: ${oldEntry.work_time}h -> ${work_time}h`);
+        }
+        if (oldEntry.account_id !== account_id) {
+            changes.push(`zmiana konta: ${oldEntry.account_id} -> ${account_id}`);
+        }
+
+        // Dodajemy log
+        await logAction(
+            req.session.operator_id,
+            'UPDATE',
+            'WORKSHEET',
+            id,
+            `Zaktualizowano wpis w arkuszu dla pracownika: ${enrollnumber}, data: ${event_date.toLocaleDateString()}, ${changes.join(', ')}`
+        );
+
+        res.status(200).json({ message: 'Wpis zaktualizowany pomyślnie', entry: updatedEntry });
     } catch (error) {
         console.error('Błąd podczas aktualizacji wpisu:', error);
         res.status(500).json({ message: 'Wystąpił błąd podczas aktualizacji wpisu', error: error.message });

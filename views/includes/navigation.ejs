@@ -40,6 +40,11 @@
                 <li class="nav-item">
                     <a class="nav-link <%= path === '/worksheet-report' ? 'active' : '' %>" href="/worksheet-report">Raporty</a>
                 </li>
+                <% if (isAuthenticated && isAdmin) { %>
+                    <li class="nav-item">
+                        <a class="nav-link <%= path === '/logs-list' ? 'active' : '' %>" href="/logs-list">Logi operatorów</a>
+                    </li>
+                <% } %>
                 <% } %>
             </ul>
             <ul class="navbar-nav">

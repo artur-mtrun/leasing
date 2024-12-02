@@ -9,6 +9,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 require('dotenv').config();
 require('./models/associations');
+const logsRoutes = require('./routes/logs');
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use(accountRoutes);
 app.use(companyRoutes);
 app.use(allEventsRoutes);
 app.use('/api/worksheet', worksheetAPIRoutes);
+app.use(logsRoutes);
 
 app.use(errorController.get404);
 sequelize.sync()
