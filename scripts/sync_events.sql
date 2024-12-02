@@ -5,33 +5,11 @@ SET maintenance_work_mem = '2GB';
 -- Rozpoczęcie transakcji
 BEGIN;
 
--- Tworzenie tymczasowej tabeli dla nowych rekordów
-CREATE TEMP TABLE new_events AS
-SELECT DISTINCT 
-    ae.machinenumber, 
-    ae.enrollnumber, 
-    ae.in_out, 
-    ae.event_date, 
-    ae.event_time,
-    ae.event_id,
-    CURRENT_TIMESTAMP AT TIME ZONE 'UTC' as "createdAt",
-    CURRENT_TIMESTAMP AT TIME ZONE 'UTC' as "updatedAt"
-FROM all_events ae
-WHERE ae.indb != 666
-AND NOT EXISTS (
-    SELECT 1 
-    FROM events e 
-    WHERE e.enrollnumber = ae.enrollnumber 
-    AND e.in_out = ae.in_out 
-    AND e.event_date = ae.event_date 
-    AND e.event_time = ae.event_time
-)
-LIMIT 100000; -- Przetwarzanie porcjami po 100k rekordów
+-- Sprawdzenie liczby rekordów przed synchronizacją
+SELECT COUNT(*) as records_before FROM events;
+SELECT COUNT(*) as records_to_sync FROM all_events WHERE indb != 666;
 
--- Utworzenie indeksu na tabeli tymczasowej dla lepszej wydajności
-CREATE INDEX idx_temp_events ON new_events (enrollnumber, in_out, event_date, event_time);
-
--- Wstawienie nowych rekordów
+-- Wstawienie nowych rekordów bezpośrednio (bez tabeli tymczasowej)
 INSERT INTO events (
     machinenumber, 
     enrollnumber, 
@@ -41,7 +19,7 @@ INSERT INTO events (
     "createdAt",
     "updatedAt"
 )
-SELECT 
+SELECT DISTINCT 
     ae.machinenumber, 
     ae.enrollnumber, 
     ae.in_out, 
@@ -59,15 +37,31 @@ AND NOT EXISTS (
     AND e.event_date = ae.event_date 
     AND e.event_time = ae.event_time
 )
-LIMIT 100000;
+LIMIT 1000;
+
+-- Sprawdzenie liczby dodanych rekordów
+SELECT COUNT(*) as records_after FROM events;
 
 -- Aktualizacja statusu przetworzonych rekordów
-UPDATE all_events ae
+UPDATE all_events
 SET indb = 666
-WHERE event_id IN (SELECT event_id FROM new_events);
+WHERE event_id IN (
+    SELECT ae.event_id
+    FROM all_events ae
+    WHERE ae.indb != 666
+    AND EXISTS (
+        SELECT 1 
+        FROM events e 
+        WHERE e.enrollnumber = ae.enrollnumber 
+        AND e.in_out = ae.in_out 
+        AND e.event_date = ae.event_date 
+        AND e.event_time = ae.event_time
+    )
+    LIMIT 1000
+);
+
+-- Sprawdzenie liczby zaktualizowanych rekordów
+SELECT COUNT(*) as records_marked FROM all_events WHERE indb = 666;
 
 -- Zapisanie zmian
 COMMIT;
-
--- Usunięcie tymczasowej tabeli
-DROP TABLE new_events; 
