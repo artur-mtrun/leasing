@@ -112,4 +112,10 @@ log_message "Całkowita liczba przetworzonych partii: $TOTAL_BATCHES"
 log_message "Całkowita liczba przetworzonych rekordów: $TOTAL_PROCESSED"
 log_message "Całkowita liczba dodanych rekordów: $TOTAL_ADDED"
 log_message "Całkowita liczba pominiętych rekordów: $((TOTAL_PROCESSED - TOTAL_ADDED))"
-log_message "Średnia liczba rekordów na partię: $((TOTAL_PROCESSED / TOTAL_BATCHES))"
+
+# Dodaj sprawdzenie czy TOTAL_BATCHES nie jest zerem przed dzieleniem
+if [ "$TOTAL_BATCHES" -gt 0 ]; then
+    log_message "Średnia liczba rekordów na partię: $((TOTAL_PROCESSED / TOTAL_BATCHES))"
+else
+    log_message "Średnia liczba rekordów na partię: 0 (brak przetworzonych partii)"
+fi
