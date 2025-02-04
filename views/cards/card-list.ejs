@@ -10,6 +10,20 @@
             <a href="/add-card" class="btn btn-primary">Dodaj kartę</a>
         </div>
         
+        <!-- Formularz wyszukiwania -->
+        <form class="mb-4" action="/card-list" method="GET">
+            <div class="input-group">
+                <input type="text" 
+                       class="form-control" 
+                       name="search" 
+                       placeholder="Szukaj po numerze karty lub nicku pracownika..."
+                       value="<%= typeof searchTerm !== 'undefined' ? searchTerm : '' %>">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+        
         <% if (cards.length > 0) { %>
             <table class="table table-striped table-hover">
                 <thead class="table-success">
@@ -40,6 +54,32 @@
                     <% }) %>
                 </tbody>
             </table>
+            
+            <!-- Paginacja -->
+            <nav aria-label="Nawigacja stron">
+                <ul class="pagination justify-content-center">
+                    <% if (hasPreviousPage) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/card-list?page=<%= currentPage - 1 %>">Poprzednia</a>
+                        </li>
+                    <% } %>
+                    
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                            <a class="page-link" 
+                               href="/card-list?page=<%= i %><%= searchTerm ? `&search=${searchTerm}` : '' %>">
+                               <%= i %>
+                            </a>
+                        </li>
+                    <% } %>
+                    
+                    <% if (hasNextPage) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/card-list?page=<%= currentPage + 1 %>">Następna</a>
+                        </li>
+                    <% } %>
+                </ul>
+            </nav>
         <% } else { %>
             <div class="alert alert-info" role="alert">
                 Brak kart w systemie.

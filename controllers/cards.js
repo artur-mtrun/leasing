@@ -1,17 +1,44 @@
 const { Card } = require('../models/card');
 const { Employee } = require('../models/employee');
 const { Area } = require('../models/area');
+const { Sequelize } = require('sequelize');
 
 exports.getCards = (req, res, next) => {
     if (!req.session.isLoggedIn) {
         return res.redirect('/login');
     }
-    Card.findAll({
+    const page = parseInt(req.query.page) || 1;
+    const limit = 25;
+    const offset = (page - 1) * limit;
+
+    const searchTerm = req.query.search;
+    const where = {};
+    const employeeWhere = {};
+
+    if (searchTerm) {
+        where[Sequelize.Op.or] = [
+            Sequelize.where(
+                Sequelize.cast(Sequelize.col('card.cardnumber'), 'TEXT'),
+                { [Sequelize.Op.iLike]: `%${searchTerm}%` }
+            ),
+            Sequelize.where(
+                Sequelize.col('Employee.nick'),
+                { [Sequelize.Op.iLike]: `%${searchTerm}%` }
+            )
+        ];
+    }
+
+    Card.findAndCountAll({
+        where: where,
+        limit: limit,
+        offset: offset,
         include: [
             {
                 model: Employee,
                 as: 'Employee',
-                attributes: ['nick']
+                attributes: ['nick'],
+                required: false,
+                where: {}
             },
             {
                 model: Area,
@@ -20,14 +47,19 @@ exports.getCards = (req, res, next) => {
             }
         ]
     })
-    .then(cards => {
-        console.log('karty', cards);
+    .then(result => {
+        const totalPages = Math.ceil(result.count / limit);
         res.render('cards/card-list', {
-            cards: cards,
+            cards: result.rows,
             pageTitle: 'Wszystkie karty',
             path: '/card-list',
             isAuthenticated: req.session.isLoggedIn,
-            isAdmin: req.session.isAdmin
+            isAdmin: req.session.isAdmin,
+            currentPage: page,
+            totalPages: totalPages,
+            hasNextPage: page < totalPages,
+            hasPreviousPage: page > 1,
+            searchTerm: searchTerm
         });
     })
     .catch(err => {

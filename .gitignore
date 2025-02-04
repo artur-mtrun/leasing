@@ -5,4 +5,5 @@ node_modules/
 struktura.txt
 solution.txt
 scripts/sync_events.log
+scripts/db_copy.sh
 to_do.txt
