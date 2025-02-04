@@ -8,7 +8,7 @@ exports.getCards = (req, res, next) => {
         return res.redirect('/login');
     }
     const page = parseInt(req.query.page) || 1;
-    const limit = 25;
+    const limit = 20;
     const offset = (page - 1) * limit;
 
     const searchTerm = req.query.search;

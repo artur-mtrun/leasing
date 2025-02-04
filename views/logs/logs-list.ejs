@@ -4,6 +4,18 @@
     <%- include('../includes/navigation.ejs') %>
     <main>
         <h1>Logi operatorów</h1>
+        <form class="mb-4" action="/logs-list" method="GET">
+            <div class="input-group">
+                <input type="text" 
+                       class="form-control" 
+                       name="search" 
+                       placeholder="Szukaj po akcji, typie, szczegółach lub loginie operatora..."
+                       value="<%= typeof searchTerm !== 'undefined' ? searchTerm : '' %>">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
         <table class="table">
             <thead>
                 <tr>
@@ -26,5 +38,37 @@
                 <% } %>
             </tbody>
         </table>
+        <% if (logs.length > 0) { %>
+            <nav aria-label="Nawigacja stron">
+                <ul class="pagination justify-content-center">
+                    <% if (hasPreviousPage) { %>
+                        <li class="page-item">
+                            <a class="page-link" 
+                               href="/logs-list?page=<%= currentPage - 1 %><%= searchTerm ? `&search=${searchTerm}` : '' %>">
+                               Poprzednia
+                            </a>
+                        </li>
+                    <% } %>
+                    
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                            <a class="page-link" 
+                               href="/logs-list?page=<%= i %><%= searchTerm ? `&search=${searchTerm}` : '' %>">
+                               <%= i %>
+                            </a>
+                        </li>
+                    <% } %>
+                    
+                    <% if (hasNextPage) { %>
+                        <li class="page-item">
+                            <a class="page-link" 
+                               href="/logs-list?page=<%= currentPage + 1 %><%= searchTerm ? `&search=${searchTerm}` : '' %>">
+                               Następna
+                            </a>
+                        </li>
+                    <% } %>
+                </ul>
+            </nav>
+        <% } %>
     </main>
 <%- include('../includes/end.ejs') %> 
