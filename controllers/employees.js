@@ -7,23 +7,47 @@ const {
     renderViewWithError, 
     getLastEmployeeNumber 
 } = require('../utils/helpers');
+const { Sequelize } = require('sequelize');
 
 exports.getEmployees = async (req, res, next) => {
     if (!checkAuth(req, res)) return;
 
-    let findOptions = {
-        include: [
-            { model: Company, as: 'Company' },
-            { model: Area, as: 'Area' }
-        ]
-    };
-    
-    if (req.session.area_id !== 0) {
-        findOptions.where = { area_id: req.session.area_id };
-    }
-
     try {
-        const employees = await Employee.findAll(findOptions);
+        const page = parseInt(req.query.page) || 1;
+        const limit = 25;
+        const offset = (page - 1) * limit;
+        const searchTerm = req.query.search;
+
+        const findOptions = {
+            include: [
+                { model: Company, as: 'Company', required: false },
+                { model: Area, as: 'Area', required: false }
+            ],
+            limit: limit,
+            offset: offset
+        };
+
+        if (req.session.area_id !== 0) {
+            findOptions.where = { area_id: req.session.area_id };
+        }
+
+        if (searchTerm) {
+            findOptions.where = {
+                ...findOptions.where,
+                [Sequelize.Op.or]: [
+                    { nick: { [Sequelize.Op.iLike]: `%${searchTerm}%` } },
+                    Sequelize.where(
+                        Sequelize.cast(Sequelize.col('enrollnumber'), 'TEXT'),
+                        { [Sequelize.Op.iLike]: `%${searchTerm}%` }
+                    )
+                ]
+            };
+        }
+
+        const { count, rows: employees } = await Employee.findAndCountAll(findOptions);
+
+        const totalPages = Math.ceil(count / limit);
+
         console.log(req.session.area_id === 0 
             ? 'Wyświetlanie wszystkich pracowników' 
             : `Wyświetlanie pracowników dla area_id: ${req.session.area_id}`);
@@ -33,6 +57,11 @@ exports.getEmployees = async (req, res, next) => {
             employees,
             pageTitle: 'Pracownicy',
             path: '/',
+            currentPage: page,
+            totalPages: totalPages,
+            hasNextPage: page < totalPages,
+            hasPreviousPage: page > 1,
+            searchTerm: searchTerm,
             isAuthenticated: req.session.isLoggedIn,
             isAdmin: req.session.isAdmin
         });
