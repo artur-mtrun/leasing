@@ -483,14 +483,23 @@ function exportToXLSX(data, month, year, useFullHours) {
 
         let totalMinutes = 0;
         for (let day = 1; day <= daysInMonth; day++) {
-            const dayData = employee.days[day] || 0;
+            const dayData = employee.days[day] ?? null;
+            
             if (useFullHours) {
-                const rounded = roundWorkTime(dayData);
-                rowData.push(rounded);
-                totalMinutes += rounded * 60;
+                if (dayData) {
+                    const rounded = roundWorkTime(dayData);
+                    rowData.push(rounded);
+                    totalMinutes += rounded * 60;
+                } else {
+                    rowData.push('');
+                }
             } else {
-                rowData.push(dayData ? (dayData / 60).toFixed(2) : '');
-                totalMinutes += dayData;
+                if (dayData) {
+                    rowData.push((dayData / 60).toFixed(2));
+                    totalMinutes += dayData;
+                } else {
+                    rowData.push('');
+                }
             }
         }
 
