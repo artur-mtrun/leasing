@@ -80,6 +80,7 @@ function addEventListeners() {
     document.getElementById('generate-report').addEventListener('click', generateReport);
     document.getElementById('generate-pdf').addEventListener('click', generatePDF);
     document.getElementById('generate-timesheet-pdf').addEventListener('click', generateTimesheetPDF);
+    document.getElementById('generate-timesheet-xlsx').addEventListener('click', generateTimesheetXLSX);
 }
 
 function generateReport() {
@@ -414,4 +415,91 @@ function createTimesheetPDF(data, month, year) {
     doc.text(summaryText, marginLeft, finalY.lastAutoTable.finalY + 10);
 
     doc.save(`karta_pracy_${monthName}_${year}.pdf`);
+}
+
+async function generateTimesheetXLSX() {
+    const year = document.getElementById('year-filter').value;
+    const month = document.getElementById('month-filter').value;
+    const accountId = document.getElementById('account-filter').value;
+    const companyId = document.getElementById('company-filter').value;
+    const employeeId = document.getElementById('employee-filter').value;
+    const useFullHours = document.getElementById('full-hours-checkbox').checked;
+
+    const params = new URLSearchParams({
+        year: year,
+        month: month
+    });
+
+    if (accountId) params.append('account_id', accountId);
+    if (companyId) params.append('company_id', companyId);
+    if (employeeId) params.append('employee_id', employeeId);
+
+    try {
+        const response = await fetch('/api/worksheet/timesheet?' + params);
+        const data = await response.json();
+        exportToXLSX(data, month, year, useFullHours);
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Wystąpił błąd podczas generowania pliku XLSX');
+    }
+}
+
+function exportToXLSX(data, month, year, useFullHours) {
+    const XLSX = window.XLSX;
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.aoa_to_sheet([]);
+
+    // Nagłówek
+    const monthNames = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 
+                       'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
+    const monthName = monthNames[parseInt(month) - 1];
+    XLSX.utils.sheet_add_aoa(worksheet, [[`Karta pracy - ${monthName} ${year}`]], { origin: 'A1' });
+
+    // Nagłówki kolumn
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const headers = ['L.p.', 'Nazwisko i imię'];
+    for (let day = 1; day <= daysInMonth; day++) {
+        headers.push(day.toString());
+    }
+    headers.push('Suma godzin');
+    XLSX.utils.sheet_add_aoa(worksheet, [headers], { origin: 'A3' });
+
+    // Dane
+    data.forEach((employee, index) => {
+        const rowData = [
+            index + 1,
+            employee.employee_nick
+        ];
+
+        let totalMinutes = 0;
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayData = employee.days[day] || 0;
+            if (useFullHours) {
+                const rounded = roundWorkTime(dayData);
+                rowData.push(rounded);
+                totalMinutes += rounded * 60;
+            } else {
+                rowData.push(dayData ? (dayData / 60).toFixed(2) : '');
+                totalMinutes += dayData;
+            }
+        }
+
+        const totalHours = useFullHours ? 
+            roundWorkTime(totalMinutes) : 
+            (totalMinutes / 60).toFixed(2);
+        rowData.push(totalHours);
+
+        XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
+    });
+
+    // Formatowanie
+    worksheet['!cols'] = [
+        { width: 5 },  // L.p.
+        { width: 25 }, // Nazwisko
+        ...Array(daysInMonth).fill({ width: 4 }),
+        { width: 10 } // Suma
+    ];
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Karta pracy');
+    XLSX.writeFile(workbook, `karta_pracy_${monthName}_${year}.xlsx`);
 }

@@ -65,8 +65,12 @@
                 </div>
                 <div class="col-md-2">
                     <label class="form-label">&nbsp;</label>
+                    <button id="generate-timesheet-xlsx" class="btn btn-success form-control">Generuj kartę pracy XLSX</button>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="full-hours-checkbox">
+                        <input class="form-check-input" type="checkbox" id="full-hours-checkbox" checked>
                         <label class="form-check-label" for="full-hours-checkbox">
                             Pełne godziny
                         </label>
@@ -100,6 +104,7 @@
         <%- include('../includes/end.ejs') %>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
         <script src="/js/worksheet-report.js"></script>
     </body>
 <% } %>
