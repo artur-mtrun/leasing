@@ -455,14 +455,24 @@ function exportToXLSX(data, month, year, useFullHours) {
     const monthName = monthNames[parseInt(month) - 1];
     XLSX.utils.sheet_add_aoa(worksheet, [[`Karta pracy - ${monthName} ${year}`]], { origin: 'A1' });
 
-    // Nagłówki kolumn
+    // Generuj nazwy dni i numery
     const daysInMonth = new Date(year, month, 0).getDate();
-    const headers = ['L.p.', 'Nazwisko i imię'];
+    const dayNames = [];
+    const dayNumbers = [];
+    
     for (let day = 1; day <= daysInMonth; day++) {
-        headers.push(day.toString());
+        const date = new Date(year, month - 1, day);
+        const dayOfWeek = date.getDay();
+        const days = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
+        dayNames.push(days[dayOfWeek]);
+        dayNumbers.push(day);
     }
-    headers.push('Suma godzin');
-    XLSX.utils.sheet_add_aoa(worksheet, [headers], { origin: 'A3' });
+
+    // Nagłówki kolumn (2 wiersze)
+    XLSX.utils.sheet_add_aoa(worksheet, [
+        ['L.p.', 'Nazwisko i imię', ...dayNames, 'Suma godzin'],
+        ['', '', ...dayNumbers, '']
+    ], { origin: 'A3' });
 
     // Dane
     data.forEach((employee, index) => {
@@ -496,7 +506,7 @@ function exportToXLSX(data, month, year, useFullHours) {
     worksheet['!cols'] = [
         { width: 5 },  // L.p.
         { width: 25 }, // Nazwisko
-        ...Array(daysInMonth).fill({ width: 4 }),
+        ...Array(daysInMonth).fill({ width: 8 }), // Szersze kolumny dla nazw dni
         { width: 10 } // Suma
     ];
 
